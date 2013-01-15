@@ -29,7 +29,11 @@
             android:label="Facebook Login" >
         </activity>
          <activity
-            android:name=".PostMessage"
+            android:name="za.co.rigaming.realintensechat.GetMessages"
+            android:label="Send Message" >
+        </activity>
+        <activity
+            android:name="za.co.rigaming.realintensechat.GetUsers"
             android:label="Send Message" >
         </activity>
     </application>

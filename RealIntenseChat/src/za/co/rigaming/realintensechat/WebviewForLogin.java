@@ -47,7 +47,7 @@ public class WebviewForLogin extends Activity {
 					String c = CookieManager.getInstance().getCookie("www.rigaming.co.za");
 					Log.i("SESSION!!!!", c.replace("RIGSESS=", ""));
 					AppSettings.setCookie(c.replace("RIGSESS=", ""));
-					Intent startGetingMessage = new Intent(WebviewForLogin.this, PostMessage.class);
+					Intent startGetingMessage = new Intent(WebviewForLogin.this, GetMessages.class);
 					startActivity(startGetingMessage);
 					finish();
 				}
@@ -55,12 +55,9 @@ public class WebviewForLogin extends Activity {
 				super.onPageFinished(view, url);
 			}
 		});
-		if (AppSettings.getClient().getCookieStore().getCookies().get(0).isExpired(new Date())) {
+		
 		webview.loadUrl("http://www.rigaming.co.za/facebook_login.php");
-		} else {
-			Intent startGetingMessage = new Intent(WebviewForLogin.this, PostMessage.class);
-			startActivity(startGetingMessage);
-		}
+		
 
 		super.onCreate(savedInstanceState);
 	}

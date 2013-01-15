@@ -5,18 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/chat_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -24,5 +12,26 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Post" />
+
+     <TextView
+         android:id="@+id/chatView"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_above="@+id/button1"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentTop="true"
+         android:singleLine="false"
+         android:text="TextView" />
+
+ <EditText
+     android:id="@+id/chat_input"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignParentBottom="true"
+     android:layout_alignParentLeft="true"
+     android:layout_alignTop="@+id/button1"
+     android:layout_toLeftOf="@+id/button1"
+     android:ems="10" />
 
 </RelativeLayout>

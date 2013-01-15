@@ -21,9 +21,10 @@ public class AppSettings extends Application {
 	@Override
 	public void onCreate(){
 	}
-	static DefaultHttpClient getClient(){
+	static DefaultHttpClient getClient() {
 		return client;
 	}
+	
 	private static DefaultHttpClient createClient(){
 		BasicHttpParams params = new BasicHttpParams();
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
