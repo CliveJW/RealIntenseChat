@@ -23,9 +23,6 @@ public class MainActivity extends Activity {
 		Button login, getUsers, getMessages;
 		
 		login = (Button) findViewById(R.id.login);
-		getUsers = (Button) findViewById(R.id.users);
-		getMessages = (Button) findViewById(R.id.messages);
-		
 		
 		
 		login.setOnClickListener(new OnClickListener() {
@@ -38,23 +35,6 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		getUsers.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent startGettingUsers = new Intent(MainActivity.this, GetUsers.class);
-				startActivity(startGettingUsers);
-			}
-		});
-		
-		getMessages.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent startGettingMessages = new Intent(MainActivity.this, GetMessages.class);
-				startActivity(startGettingMessages);
-			}
-		});
 		
 	}
 
