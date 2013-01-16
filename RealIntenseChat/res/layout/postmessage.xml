@@ -3,13 +3,15 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_orange_dark"
+    android:background="@android:color/black"
+    android:gravity="right"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userlist"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Post" />
@@ -21,32 +23,66 @@
         android:layout_above="@+id/button1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/chat_input"
-        android:background="@android:color/holo_orange_dark"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/user"
+        android:background="@layout/border"
         android:singleLine="false"
+        
         android:text="" />
-
-    <EditText
-        android:id="@+id/chat_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/button1"
-        android:layout_marginRight="121dp"
-        android:layout_toLeftOf="@+id/button1"
-        android:ems="10" />
 
     <TextView
         android:id="@+id/user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/chat_input"
-        android:layout_alignBottom="@+id/chat_input"
-        android:layout_toLeftOf="@+id/button1"
-        android:layout_toRightOf="@+id/chatView"
+        android:layout_alignLeft="@+id/unreadpm"
+        android:layout_alignParentTop="true"
         android:text="User"
+        android:textSize="14sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/unread"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/user"
+        android:text="0"
+        android:textSize="14sp"/>
+
+    <ListView
+        android:id="@+id/userlist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_below="@+id/unreadpm"
+        android:layout_toRightOf="@+id/chatView" 
+        android:layout_centerHorizontal="true">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/unreadpm"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user"
+        android:layout_toLeftOf="@+id/unread"
+        android:text="RigMail:"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/chat_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/chatView"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/chatView"
+        android:layout_below="@+id/chatView"
+        android:background="@layout/border"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

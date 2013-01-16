@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -23,24 +24,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.text.Html;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.CharacterStyle;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.TextView.BufferType;
 
 public class GetMessages extends Activity {
 
@@ -52,12 +64,23 @@ public class GetMessages extends Activity {
 	String lastID;
 	User user; 
 	TextView username;
+	TextView unread;
+	ListView lv;
+	Handler mHandler;
+	ListView mainListView;
+	ArrayAdapter<String> listAdapter; 
+	ArrayList<String> userList;
+	ViewGroup vg;
+	LayoutInflater mInflater;
+	Color color;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
+		mHandler = new Handler();
 		user = new User();
-
+		userList = new ArrayList<String>();  
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
@@ -70,20 +93,40 @@ public class GetMessages extends Activity {
 		chatView = (TextView) findViewById(R.id.chatView);
 		chatView.setTextSize(11);
 		chatView.setMovementMethod(new ScrollingMovementMethod());
-		chatView.setBackgroundResource(R.layout.border);
+		
 		username = (TextView) findViewById(R.id.user);
+		unread = (TextView) findViewById(R.id.unread);
+		
+		mainListView = (ListView) findViewById( R.id.userlist );
+		
+		
+// Set the ArrayAdapter as the ListView's adapter.  
+mainListView.setAdapter( listAdapter );        
 		
 		post.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-
+				
 				new GetChatMessages().execute();
 				input.setText("");
+				mHandler.postDelayed(chatRefresh, 5000);
+				
 
 			}
 		});
-		new getUserDetails().execute();
-		new GetChatMessages().execute();
+		
+		input.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (input.isInputMethodTarget()) {
+					mHandler.removeCallbacks(chatRefresh);
+				} 
+				
+			}
+		});
+		
+		mHandler.post(chatRefresh);
 		super.onCreate(savedInstanceState);
 
 	}
@@ -92,8 +135,9 @@ public class GetMessages extends Activity {
 		String id;
 		String name;
 		String rank;
-		String chatColor;
 		String unreadPM;
+		String rankColour;
+		String directColor;
 	}
 
 	private class Message {
@@ -102,9 +146,8 @@ public class GetMessages extends Activity {
 		int userid;
 		int from;
 		boolean pvt;
-		String rankColour;
-		String pvtColour;
 		String sender;
+		String sendercolor;
 
 	}
 
@@ -137,6 +180,8 @@ public class GetMessages extends Activity {
 
 		@Override
 		protected Object doInBackground(Object... params) {
+			
+			new getUserDetails().execute();
 
 			try {
 
@@ -161,19 +206,38 @@ public class GetMessages extends Activity {
 					msg.Text = childJSONObject.getString("text");
 					msg.time = childJSONObject.getString("time");
 					msg.userid = childJSONObject.getInt("userid");
-					msgList.add(msg);
 					msg.sender = childJSONObject.getString("user");
+					msg.time = childJSONObject.getString("time");
+					msg.sendercolor = childJSONObject.getString("color");
+					msgList.add(msg);
+					
 					lastID = childJSONObject.getString("messageid");
 					Log.i("UserMessage", childJSONObject.toString() + "\n");
 				}
 				Log.i("Msg List Size", String.valueOf(msgList.size()));
 				for (Message i : msgList) {
-					Log.i("MessageText",
-							i.Text.replaceAll("(<[^>]+>)", "{No Smiley}"));
+					i.Text = i.Text.replaceAll("(<[^>]+>)", "{No Smiley}");
+					Log.i("MessageText",i.Text
+							 );
+					
+						String name = "<font color=" + i.sendercolor + ">:" + i.sender + ": " + "</font><br></a>";
 							
-							String spanToBe = ": " + i.sender + " : " + i.Text;
-					publishProgress(spanToBe.replaceAll("(<[^>]+>)",
-							"{No Smiley}"));
+							String spanToBe = null;
+						
+							if (i.Text.contains(user.name))  {
+								 
+								i.Text = "<font color=" + user.directColor + ">" + i.Text + "</font><br>";
+								spanToBe = name + i.Text;
+							publishProgress(spanToBe);
+							
+							} else {
+								spanToBe = name + i.Text;
+								publishProgress(spanToBe);
+							}
+							
+							
+							
+					
 					try {
 						Thread.sleep(20);
 					} catch (InterruptedException e) {
@@ -181,7 +245,7 @@ public class GetMessages extends Activity {
 						e.printStackTrace();
 					}
 				}
-
+				
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 			} catch (IOException e) {
@@ -233,7 +297,9 @@ public class GetMessages extends Activity {
 				user.id = (String) response.get("id");
 				user.name = (String) response.get("name");
 				user.rank = response.getString("rank");
-				user.chatColor = response.getString("nameHilite");
+				user.directColor = response.getString("nameHilite");
+				user.rankColour = response.getString("color");
+				user.unreadPM = response.getString("unreadPms");
 				publishProgress();
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
@@ -249,16 +315,19 @@ public class GetMessages extends Activity {
 		@Override
 		protected void onProgressUpdate(String... values) {
 			username.setText(user.name);
+			username.setTextColor(Color.parseColor(user.rankColour));
+			unread.setText(user.unreadPM);
+			
 			super.onProgressUpdate(values);
 		}
 		
 	}
 
 	private void appendTextAndScroll(String text) {
-		final int MAX_LINE = 50;
-		int excessLineNumber = chatView.getLineCount() - MAX_LINE;
+		
+		
 		if (chatView != null) {
-			chatView.append(text + "\n");
+			chatView.append(Html.fromHtml("<p>" + text + "</p>"));
 			final Layout layout = chatView.getLayout();
 			if (layout != null) {
 				int scrollDelta = layout
@@ -268,7 +337,8 @@ public class GetMessages extends Activity {
 					chatView.scrollBy(0, scrollDelta);
 			}
 		}
-
+		
+		
 	}
 	
 	public static CharSequence setSpanBetweenTokens(CharSequence text,
@@ -296,6 +366,94 @@ public class GetMessages extends Activity {
 		    return text;
 		}
 	
+	private Runnable chatRefresh = new Runnable() {
+        public void run() {
+        	new getUserDetails().execute();
+    		new GetChatMessages().execute();
+    		new PopulateUsers().execute();
+            mHandler.postDelayed(chatRefresh, 10000);
+        }
+    };
+    
+    class PopulateUsers extends AsyncTask<Object, Object, Object> {
+    	
+    	
+    	
+    	@Override
+    	protected void onProgressUpdate(Object... values) {
+    		
+    		
+        	
+        	Context context = getApplicationContext();
+        	
+        	mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    		
+    		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList) {
+    			@Override
+    	        public View getView(int position, View convertView, ViewGroup parent) {
+    				
+    	            View view =super.getView(position, convertView, parent);
+
+    	            TextView textView=(TextView) view.findViewById(android.R.id.text1);
+
+    	            /*YOUR CHOICE OF COLOR*/
+    	            textView.setTextColor(Color.BLUE);
+
+    	            return view;
+    	        }
+    		}; 
+    		mainListView.setAdapter( listAdapter );     
+    		super.onProgressUpdate(values);
+    	}
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			
+			try {
+				
+				
+			
+			HttpPost poster = new HttpPost(
+					"http://www.rigaming.co.za/getUsers.php?users");
+			//poster.setEntity(pm.createPostFormData());
+
+			ResponseHandler<String> responseHandler = new BasicResponseHandler();
+			String responseBody = dhc.execute(poster, responseHandler);
+			JSONObject response = new JSONObject(responseBody);
+			Log.i("Users Response", response.toString());
+
+			JSONArray jsonMainArr = response.getJSONArray("users");
+			userList = new ArrayList<String>();
+			for (int i = 0; i < jsonMainArr.length(); i++) { // **line 2**
+				JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
+				String name = childJSONObject.getString("name");
+				Log.i("USERNAME", name);
+				
+				userList.add(name);
+				color = new Color();
+				
+				
 	
+			}
+			
+			publishProgress();
+			
+			
+			}catch (JSONException e) {
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			return null;
+		}
+    	
+    }
+
 
 }
