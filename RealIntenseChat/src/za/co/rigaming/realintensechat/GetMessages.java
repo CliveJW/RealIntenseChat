@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -49,6 +50,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,7 +61,7 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 
-public class GetMessages extends Activity {
+public class GetMessages extends ListActivity {
 
 	Button post;
 	EditText input;
@@ -74,15 +77,16 @@ public class GetMessages extends Activity {
 	ListView mainListView;
 	ArrayAdapter<String> listAdapter; 
 	ArrayList<String> userList;
-	ViewGroup vg;
+	
 	LayoutInflater mInflater;
 	String color;
-	
+	ScrollView sv ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		mHandler = new Handler();
+		
 		user = new User();
 		userList = new ArrayList<String>();  
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
@@ -102,27 +106,43 @@ public class GetMessages extends Activity {
 		unread = (TextView) findViewById(R.id.unread);
 		
 		mainListView = (ListView) findViewById( R.id.userlist );
+		sv = (ScrollView) findViewById(R.id.scrollView1);
+		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList); 
 		
 		
 // Set the ArrayAdapter as the ListView's adapter.  
-mainListView.setAdapter( listAdapter );        
-		
+		mainListView.setAdapter( listAdapter );  
+
+		mainListView.setOnItemClickListener(new OnItemClickListener() {
+			
+			public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+				
+			      String userName = (String) mainListView.getItemAtPosition(position);
+			      if (input.getText().length() == 0) {
+			    	  input.setText("[" + userName + "] ");
+			    	  input.setSelection(input.getText().length());
+			      } else {
+			    	  input.setText(input.getText() + " " + "[" + userName + "] ");  
+			    	  input.setSelection(input.getText().length());
+			      }
+			      
+			      
+			    }
+		});
+				
 		post.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				mHandler.removeCallbacks(chatRefresh);
 				new GetChatMessages().execute();
 				input.setText("");
-				mHandler.postDelayed(chatRefresh, 5000);
+				//mHandler.postDelayed(chatRefresh, 5000);
 				
 
 			}
 		});
 		
-		
-		
-		
-		
+
 		input.setOnEditorActionListener(new OnEditorActionListener() {
 		    @Override
 		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -130,13 +150,14 @@ mainListView.setAdapter( listAdapter );
 		        	mHandler.removeCallbacks(chatRefresh);
 		            doMsg();
 		           // input.setInputType(InputType.TYPE_NULL);
-		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		            input.setText("");
 		            
 		        }
 		        return false;
 		    }
 		});
+		
 		input.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -149,6 +170,7 @@ mainListView.setAdapter( listAdapter );
 		});
 		
 		mHandler.post(chatRefresh);
+		new getUserDetails().execute();
 		super.onCreate(savedInstanceState);
 
 	}
@@ -287,7 +309,8 @@ mainListView.setAdapter( listAdapter );
 
 		@Override
 		protected void onPostExecute(Object result) {
-
+			mHandler.removeCallbacks(chatRefresh);
+			mHandler.postDelayed(chatRefresh, 30000);
 			super.onPostExecute(result);
 		}
 
@@ -350,14 +373,8 @@ mainListView.setAdapter( listAdapter );
 		
 		if (chatView != null) {
 			chatView.append(Html.fromHtml("<p>" + text + "</p>"));
-			final Layout layout = chatView.getLayout();
-			if (layout != null) {
-				int scrollDelta = layout
-						.getLineBottom(chatView.getLineCount() - 1)
-						- chatView.getScrollY() - chatView.getHeight();
-				if (scrollDelta > 0)
-					chatView.scrollBy(0, scrollDelta);
-			}
+			
+			sv.fullScroll(View.FOCUS_DOWN);
 		}
 		
 		
@@ -390,10 +407,10 @@ mainListView.setAdapter( listAdapter );
 	
 	private Runnable chatRefresh = new Runnable() {
         public void run() {
-        	new getUserDetails().execute();
+        	
     		new GetChatMessages().execute();
     		new PopulateUsers().execute();
-            mHandler.postDelayed(chatRefresh, 10000);
+            mHandler.postDelayed(chatRefresh, 30000);
         }
     };
     
@@ -408,25 +425,7 @@ mainListView.setAdapter( listAdapter );
         	
         	Context context = getApplicationContext();
         	
-    		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList) {
-    			@Override
-    	        public View getView(int position, View convertView, ViewGroup parent) {
-    				
-    	            View view =super.getView(position, convertView, parent);
-
-    	            TextView textView=(TextView) view.findViewById(android.R.id.text1);
-    	            try {
-    	            /*YOUR CHOICE OF COLOR*/
-    	            textView.setTextColor(Color.parseColor(color));
-
-    	            return view;
-    	            }  catch (NullPointerException npe) {
-    	            	
-    	            }
-    	            return view;
-    	        }
-    		}; 
-    		mainListView.setAdapter( listAdapter );     
+    		
     		super.onProgressUpdate(values);
     	}
 
@@ -480,8 +479,26 @@ mainListView.setAdapter( listAdapter );
     }
     
     public void doMsg() {
+    	mHandler.removeCallbacks(chatRefresh);
     	new GetChatMessages().execute();
     }
+    
+    @Override
+    protected void onResume() {
+    	//mHandler.removeCallbacks(chatRefresh);
+    	//mHandler.post(chatRefresh);
+    	super.onResume();
+    }
 
+    @Override
+    protected void onPause() {
+    	mHandler.removeCallbacks(chatRefresh);
+    	super.onPause();
+    }
+    
+    public void addItems(TextView v) {
+        userList.add(v.toString());
+        listAdapter.notifyDataSetChanged();
+    }
 
 }

@@ -11,26 +11,10 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/userlist"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/scrollView1"
         android:text="Post" />
-
-    <TextView
-        android:id="@+id/chatView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/user"
-        android:background="@layout/border"
-        android:singleLine="false"
-        
-        android:text="" />
 
     <TextView
         android:id="@+id/user"
@@ -39,8 +23,7 @@
         android:layout_alignLeft="@+id/unreadpm"
         android:layout_alignParentTop="true"
         android:text="User"
-        android:textSize="14sp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/unread"
@@ -56,10 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/unreadpm"
-        android:layout_toRightOf="@+id/chatView" 
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp" >
 
     </ListView>
 
@@ -72,18 +54,38 @@
         android:text="RigMail:"
         android:textSize="14sp" />
 
+    <ScrollView
+        android:id="@+id/scrollView1"
+       android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/user"
+        android:background="@layout/border"
+        android:overScrollMode="always">
+<TextView
+        android:id="@+id/chatView"
+         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="false"
+        
+        android:text="" />
+        
+    </ScrollView>
+
     <EditText
         android:id="@+id/chat_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/chatView"
+        android:layout_alignLeft="@+id/scrollView1"
         android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/chatView"
-        android:layout_below="@+id/chatView"
+        android:layout_alignRight="@+id/scrollView1"
+        android:layout_alignTop="@+id/button1"
         android:background="@layout/border"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
+        android:ems="10" />
 
 </RelativeLayout>
