@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.text.Html;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -44,6 +45,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.ArrayAdapter;
@@ -53,6 +56,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.BufferType;
+import android.widget.TextView.OnEditorActionListener;
 
 public class GetMessages extends Activity {
 
@@ -72,7 +76,7 @@ public class GetMessages extends Activity {
 	ArrayList<String> userList;
 	ViewGroup vg;
 	LayoutInflater mInflater;
-	Color color;
+	String color;
 	
 
 	@Override
@@ -106,7 +110,7 @@ mainListView.setAdapter( listAdapter );
 		post.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				
+				mHandler.removeCallbacks(chatRefresh);
 				new GetChatMessages().execute();
 				input.setText("");
 				mHandler.postDelayed(chatRefresh, 5000);
@@ -115,6 +119,24 @@ mainListView.setAdapter( listAdapter );
 			}
 		});
 		
+		
+		
+		
+		
+		input.setOnEditorActionListener(new OnEditorActionListener() {
+		    @Override
+		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        	mHandler.removeCallbacks(chatRefresh);
+		            doMsg();
+		           // input.setInputType(InputType.TYPE_NULL);
+		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		            input.setText("");
+		            
+		        }
+		        return false;
+		    }
+		});
 		input.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -386,8 +408,6 @@ mainListView.setAdapter( listAdapter );
         	
         	Context context = getApplicationContext();
         	
-        	mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    		
     		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList) {
     			@Override
     	        public View getView(int position, View convertView, ViewGroup parent) {
@@ -395,10 +415,14 @@ mainListView.setAdapter( listAdapter );
     	            View view =super.getView(position, convertView, parent);
 
     	            TextView textView=(TextView) view.findViewById(android.R.id.text1);
-
+    	            try {
     	            /*YOUR CHOICE OF COLOR*/
-    	            textView.setTextColor(Color.BLUE);
+    	            textView.setTextColor(Color.parseColor(color));
 
+    	            return view;
+    	            }  catch (NullPointerException npe) {
+    	            	
+    	            }
     	            return view;
     	        }
     		}; 
@@ -430,8 +454,8 @@ mainListView.setAdapter( listAdapter );
 				Log.i("USERNAME", name);
 				
 				userList.add(name);
-				color = new Color();
 				
+				color = childJSONObject.getString("color");
 				
 	
 			}
@@ -453,6 +477,10 @@ mainListView.setAdapter( listAdapter );
 			return null;
 		}
     	
+    }
+    
+    public void doMsg() {
+    	new GetChatMessages().execute();
     }
 
 
