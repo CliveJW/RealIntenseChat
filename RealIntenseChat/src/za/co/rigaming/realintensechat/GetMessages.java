@@ -77,7 +77,7 @@ public class GetMessages extends ListActivity {
 	ListView mainListView;
 	ArrayAdapter<String> listAdapter; 
 	ArrayList<String> userList;
-	
+	ViewGroup vg;
 	LayoutInflater mInflater;
 	String color;
 	ScrollView sv ;
@@ -107,8 +107,6 @@ public class GetMessages extends ListActivity {
 		
 		mainListView = (ListView) findViewById( R.id.userlist );
 		sv = (ScrollView) findViewById(R.id.scrollView1);
-		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList); 
-		
 		
 // Set the ArrayAdapter as the ListView's adapter.  
 		mainListView.setAdapter( listAdapter );  
@@ -425,7 +423,28 @@ public class GetMessages extends ListActivity {
         	
         	Context context = getApplicationContext();
         	
-    		
+    		listAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_view, userList) {
+    			
+    			
+    			
+    			@Override
+    	        public View getView(int position, View convertView, ViewGroup parent) {
+    				
+    	            View view =super.getView(position, convertView, parent);
+
+    	            TextView textView= (TextView) view.findViewById(android.R.id.text1);
+    	            try {
+    	            /*YOUR CHOICE OF COLOR*/
+    	            textView.setTextColor(Color.parseColor(color));
+
+    	            return view;
+    	            }  catch (NullPointerException npe) {
+    	            	
+    	            }
+    	            return view;
+    	        }
+    		}; 
+    		mainListView.setAdapter( listAdapter ); 
     		super.onProgressUpdate(values);
     	}
 
@@ -494,11 +513,6 @@ public class GetMessages extends ListActivity {
     protected void onPause() {
     	mHandler.removeCallbacks(chatRefresh);
     	super.onPause();
-    }
-    
-    public void addItems(TextView v) {
-        userList.add(v.toString());
-        listAdapter.notifyDataSetChanged();
     }
 
 }
