@@ -12,7 +12,8 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
-        public static final int logo=0x7f020001;
+        public static final int ico=0x7f020001;
+        public static final int logo=0x7f020002;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f070002;
@@ -21,7 +22,7 @@ public final class R {
         public static final int chat_input=0x7f07000a;
         public static final int imageView1=0x7f070001;
         public static final int login=0x7f070000;
-        public static final int menu_settings=0x7f07000d;
+        public static final int menu_settings=0x7f07000e;
         public static final int rowTextView=0x7f07000b;
         public static final int scrollView1=0x7f070004;
         public static final int unread=0x7f070007;
@@ -29,6 +30,7 @@ public final class R {
         public static final int user=0x7f070005;
         public static final int userlist=0x7f070008;
         public static final int webview=0x7f07000c;
+        public static final int whisp_text=0x7f07000d;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -36,6 +38,7 @@ public final class R {
         public static final int postmessage=0x7f030002;
         public static final int simple_view=0x7f030003;
         public static final int webview=0x7f030004;
+        public static final int whisper=0x7f030005;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;

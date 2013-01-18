@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
 			public void onClick(View arg0) {
 				Intent startLogin = new Intent(MainActivity.this, WebviewForLogin.class);
 				startActivity(startLogin);
+				finish();
 				
 			}
 		});

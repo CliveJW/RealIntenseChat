@@ -24,13 +24,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.os.SystemClock;
+import android.provider.Settings.System;
 import android.text.Html;
 import android.text.InputType;
 import android.text.Layout;
@@ -41,17 +45,28 @@ import android.text.method.ScrollingMovementMethod;
 import android.text.style.CharacterStyle;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +76,7 @@ import android.widget.TextView;
 import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 
-public class GetMessages extends ListActivity {
+public class GetMessages extends Activity {
 
 	Button post;
 	EditText input;
@@ -71,6 +86,7 @@ public class GetMessages extends ListActivity {
 	String lastID;
 	User user; 
 	TextView username;
+	TextView pvtResip;
 	TextView unread;
 	ListView lv;
 	Handler mHandler;
@@ -80,15 +96,20 @@ public class GetMessages extends ListActivity {
 	ViewGroup vg;
 	LayoutInflater mInflater;
 	String color;
-	ScrollView sv ;
-
+	ScrollView sv;
+	JSONArray jsonMainArr;
+	String userNamePvt;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		
 		
 		mHandler = new Handler();
 		
 		user = new User();
 		userList = new ArrayList<String>();  
+		
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
@@ -107,6 +128,8 @@ public class GetMessages extends ListActivity {
 		
 		mainListView = (ListView) findViewById( R.id.userlist );
 		sv = (ScrollView) findViewById(R.id.scrollView1);
+		registerForContextMenu(mainListView);
+		
 		
 // Set the ArrayAdapter as the ListView's adapter.  
 		mainListView.setAdapter( listAdapter );  
@@ -119,19 +142,26 @@ public class GetMessages extends ListActivity {
 			      if (input.getText().length() == 0) {
 			    	  input.setText("[" + userName + "] ");
 			    	  input.setSelection(input.getText().length());
+			    	  InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 			      } else {
 			    	  input.setText(input.getText() + " " + "[" + userName + "] ");  
 			    	  input.setSelection(input.getText().length());
+			    	  InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+			            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
 			      }
 			      
 			      
 			    }
+			
+			
 		});
+		
+		 
 				
 		post.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				mHandler.removeCallbacks(chatRefresh);
 				new GetChatMessages().execute();
 				input.setText("");
 				//mHandler.postDelayed(chatRefresh, 5000);
@@ -145,7 +175,6 @@ public class GetMessages extends ListActivity {
 		    @Override
 		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 		        if (actionId == EditorInfo.IME_ACTION_DONE) {
-		        	mHandler.removeCallbacks(chatRefresh);
 		            doMsg();
 		           // input.setInputType(InputType.TYPE_NULL);
 		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -156,22 +185,98 @@ public class GetMessages extends ListActivity {
 		    }
 		});
 		
-		input.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if (input.isInputMethodTarget()) {
-					mHandler.removeCallbacks(chatRefresh);
-				} 
-				
-			}
-		});
-		
 		mHandler.post(chatRefresh);
 		new getUserDetails().execute();
 		super.onCreate(savedInstanceState);
 
 	}
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		// Get the info on which item was selected
+	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+
+	    // Get the Adapter behind your ListView (this assumes you're using
+	    // a ListActivity; if you're not, you'll have to store the Adapter yourself
+	    // in some way that can be accessed here.)
+	    Adapter adapter = listAdapter;
+
+	    // Retrieve the item that was clicked on
+	    userNamePvt = (String) mainListView.getItemAtPosition(info.position);
+	    Log.i("PVT NAME!!!!", userNamePvt);
+	    menu.add(0, 987, 0, "Send Whisper To: " + userNamePvt);
+	};
+	
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+	    // Here's how you can get the correct item in onContextItemSelected()
+	    AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+	    if (item.getItemId() == 987){
+	    	ShowWhisperScreen();
+	    }
+		return false;
+	};
+	
+	public
+
+	void ShowWhisperScreen()
+
+	{
+		
+	mHandler.removeCallbacks(chatRefresh);
+
+	LayoutInflater factory = LayoutInflater.from(this);
+
+	final View textEntryView = factory.inflate(R.layout.whisper, null);
+
+	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+	alert.setInverseBackgroundForced(true);
+
+	alert.setView(textEntryView);
+
+	AlertDialog loginPrompt = alert.create();
+
+	pvtResip = (EditText) textEntryView.findViewById(R.id.whisp_text);
+
+	alert.setPositiveButton("Submit", new DialogInterface.OnClickListener()
+
+	{
+
+	public void onClick(DialogInterface dialog, int whichButton) {
+		
+		String pvt_txt = (String) pvtResip.getText().toString();
+		
+		for (int i = 0; i < jsonMainArr.length(); i++) { // **line 2**
+			try {
+			JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
+			String name = childJSONObject.getString("name");
+			Log.i("FOUNDNAME", name);
+			String id = childJSONObject.getString("id");
+			Log.i("GOT ID", id);
+			
+			if (name.equals(userNamePvt)) {
+				input.setText(pvt_txt);
+				new GetChatMessages().execute(id);
+				//input.setText("");
+				return;
+			}
+			} catch (JSONException je) {
+				je.printStackTrace();
+			}
+		}
+
+		
+		
+	       	}
+
+	});
+
+	alert.show();
+
+	};
+
 	
 	private class User {
 		String id;
@@ -195,9 +300,10 @@ public class GetMessages extends ListActivity {
 
 	private class postMessage {
 		String message;
-		String chat = "2";
+		String chat = "1";
 		String last = lastID;
 		String userid = user.id;
+		String pvtid = null;
 
 		private UrlEncodedFormEntity createPostFormData() {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -205,6 +311,9 @@ public class GetMessages extends ListActivity {
 			nameValuePairs.add(new BasicNameValuePair("message", message));
 			nameValuePairs.add(new BasicNameValuePair("userid", userid));
 			nameValuePairs.add(new BasicNameValuePair("last", last));
+			if (pvtid != null) {
+				nameValuePairs.add(new BasicNameValuePair("touserid", pvtid));
+			}
 			UrlEncodedFormEntity form = null;
 			try {
 				form = new UrlEncodedFormEntity(nameValuePairs);
@@ -218,18 +327,28 @@ public class GetMessages extends ListActivity {
 
 	}
 
-	class GetChatMessages extends AsyncTask<Object, Object, Object> {
+	class GetChatMessages extends AsyncTask<String, Object, Object> {
+		
+		
 
 		@Override
-		protected Object doInBackground(Object... params) {
+		protected Object doInBackground(String... params) {
 			
-			new getUserDetails().execute();
-
+			//new getUserDetails().execute();
+			
 			try {
 
 				// Execute HTTP Post Request
 				postMessage pm = new postMessage();
 				pm.message = input.getText().toString();
+
+				if (params.length != 0) {
+					pm.pvtid = params[0];
+					pm.chat = "1";
+				}
+				
+			    
+				
 				HttpPost poster = new HttpPost(
 						"http://www.rigaming.co.za/getChat.php?");
 				poster.setEntity(pm.createPostFormData());
@@ -288,6 +407,7 @@ public class GetMessages extends ListActivity {
 					}
 				}
 				
+				
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 			} catch (IOException e) {
@@ -307,9 +427,15 @@ public class GetMessages extends ListActivity {
 
 		@Override
 		protected void onPostExecute(Object result) {
-			mHandler.removeCallbacks(chatRefresh);
+			input.setText("");
 			mHandler.postDelayed(chatRefresh, 30000);
 			super.onPostExecute(result);
+		}
+		
+		@Override
+		protected void onPreExecute() {
+			mHandler.removeCallbacks(chatRefresh);
+			super.onPreExecute();
 		}
 
 	}
@@ -405,10 +531,11 @@ public class GetMessages extends ListActivity {
 	
 	private Runnable chatRefresh = new Runnable() {
         public void run() {
-        	
+        	if (input.length() == 0) {
     		new GetChatMessages().execute();
     		new PopulateUsers().execute();
             mHandler.postDelayed(chatRefresh, 30000);
+        	}
         }
     };
     
@@ -464,7 +591,7 @@ public class GetMessages extends ListActivity {
 			JSONObject response = new JSONObject(responseBody);
 			Log.i("Users Response", response.toString());
 
-			JSONArray jsonMainArr = response.getJSONArray("users");
+			jsonMainArr = response.getJSONArray("users");
 			userList = new ArrayList<String>();
 			for (int i = 0; i < jsonMainArr.length(); i++) { // **line 2**
 				JSONObject childJSONObject = jsonMainArr.getJSONObject(i);
@@ -504,15 +631,29 @@ public class GetMessages extends ListActivity {
     
     @Override
     protected void onResume() {
-    	//mHandler.removeCallbacks(chatRefresh);
+    	//
     	//mHandler.post(chatRefresh);
     	super.onResume();
     }
 
     @Override
     protected void onPause() {
-    	mHandler.removeCallbacks(chatRefresh);
+    	
     	super.onPause();
     }
+    
+    @Override
+    protected void onStop() {
+    	mHandler.removeCallbacks(chatRefresh);
+    	super.onStop();
+    }
+    
+    @Override
+    protected void onRestart() {
+    	mHandler.post(chatRefresh);
+    	super.onRestart();
+    }
+    
+    
 
 }
