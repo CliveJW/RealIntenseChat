@@ -2,20 +2,14 @@ package za.co.rigaming.realintensechat;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
@@ -25,55 +19,43 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.os.SystemClock;
-import android.provider.Settings.System;
+import android.os.Vibrator;
 import android.text.Html;
-import android.text.InputType;
-import android.text.Layout;
 import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.CharacterStyle;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.TextView.BufferType;
 import android.widget.TextView.OnEditorActionListener;
 
 public class GetMessages extends Activity {
@@ -99,6 +81,7 @@ public class GetMessages extends Activity {
 	ScrollView sv;
 	JSONArray jsonMainArr;
 	String userNamePvt;
+	boolean mustNotify = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +161,7 @@ public class GetMessages extends Activity {
 		            doMsg();
 		           // input.setInputType(InputType.TYPE_NULL);
 		            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-		            input.setText("");
+		            
 		            
 		        }
 		        return false;
@@ -390,21 +373,13 @@ public class GetMessages extends Activity {
 								i.Text = "<font color=" + user.directColor + ">" + i.Text + "</font><br>";
 								spanToBe = name + i.Text;
 							publishProgress(spanToBe);
+							mustNotify = true;
 							
 							} else {
 								spanToBe = name + i.Text;
 								publishProgress(spanToBe);
 							}
-							
-							
-							
-					
-					try {
-						Thread.sleep(20);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+
 				}
 				
 				
@@ -428,6 +403,9 @@ public class GetMessages extends Activity {
 		@Override
 		protected void onPostExecute(Object result) {
 			input.setText("");
+			if (mustNotify) {
+				doNotify();
+			}
 			mHandler.postDelayed(chatRefresh, 30000);
 			super.onPostExecute(result);
 		}
@@ -652,6 +630,37 @@ public class GetMessages extends Activity {
     protected void onRestart() {
     	mHandler.post(chatRefresh);
     	super.onRestart();
+    }
+    
+    public void doNotify() {
+    	try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            
+         // This example will cause the phone to vibrate "SOS" in Morse Code
+         // In Morse Code, "s" = "dot-dot-dot", "o" = "dash-dash-dash"
+         // There are pauses to separate dots/dashes, letters, and words
+         // The following numbers represent millisecond lengths
+         int dot = 200;      // Length of a Morse Code "dot" in milliseconds
+         int dash = 500;     // Length of a Morse Code "dash" in milliseconds
+         int short_gap = 200;    // Length of Gap Between dots/dashes
+         int medium_gap = 500;   // Length of Gap Between Letters
+         int long_gap = 1000;    // Length of Gap Between Words
+         long[] pattern = {
+             0,  // Start immediately
+             dot, short_gap, dot, short_gap, dot,    // s
+             medium_gap,
+             dash, short_gap, dash, short_gap, dash, // o
+             medium_gap,
+             dot, short_gap, dot, short_gap, dot,    // s
+             long_gap
+         };
+          
+         // Only perform this pattern one time (-1 means "do not repeat")
+         v.vibrate(pattern, -1);
+            r.play();
+        } catch (Exception e) {}
     }
     
     

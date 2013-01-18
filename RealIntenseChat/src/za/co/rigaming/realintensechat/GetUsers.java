@@ -29,62 +29,6 @@ import android.widget.EditText;
 
 public class GetUsers extends Activity {
 	
-	Button post;
-	EditText input;
 	
-	DefaultHttpClient dhc = AppSettings.getClient();
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-
-		setContentView(R.layout.postmessage);
-		
-		post = (Button) findViewById(R.id.button1);
-		input = (EditText) findViewById(R.id.chat_input);
-		
-		post.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-			
-				new doHttpPost().execute();
-				
-			}
-		});
-		
-		
-		super.onCreate(savedInstanceState);
-		
-	}
-	
-	class doHttpPost extends AsyncTask<Object, Object, Object> {
-
-		@Override
-		protected Object doInBackground(Object... params) {
-			HttpPost httppost = new HttpPost("http://www.rigaming.co.za/getUsers.php?users");
-
-			try {
-		        
-
-		        // Execute HTTP Post Request
-				
-		       // HttpResponse response = dhc.execute(httppost);
-		        ResponseHandler<String> responseHandler=new BasicResponseHandler();
-		        String responseBody = dhc.execute(httppost, responseHandler);
-		        JSONObject response=new JSONObject(responseBody);
-		       Log.i("GetMessage", responseBody);
-		        
-		    } catch (ClientProtocolException e) {
-		        // TODO Auto-generated catch block
-		    } catch (IOException e) {
-		        // TODO Auto-generated catch block
-		    } catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return null;
-		}
-		
-	}
 	
 }
