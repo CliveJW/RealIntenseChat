@@ -183,16 +183,35 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 				    }
 
 				    if (isActivityFound) {
-				        return null;
+				        
 				    } else {
 				    	Intent pop_priv = new Intent(context, ChatView.class);
-						createNotification(context, pop_priv, "Open R.I.G", "R.I.G Mobile", i.sender + " is chatting to you", 99944);
+						createNotification(context, pop_priv, null, "R.I.G Mobile", "Pvt From:  " + i.sender, 99944);
+						doNotify();
 				    }
 
 					continue;
 				}
 
 				if (i.Text.contains("[" + Stickies.user.name + "]")) {
+					
+					ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+				    List<RunningTaskInfo> services = activityManager
+				            .getRunningTasks(Integer.MAX_VALUE);
+				    boolean isActivityFound = false;
+
+				    if (services.get(0).topActivity.getPackageName().toString()
+				            .equalsIgnoreCase(context.getPackageName().toString())) {
+				        isActivityFound = true;
+				    }
+
+				    if (isActivityFound) {
+				        
+				    } else {
+				    	Intent pop_priv = new Intent(context, ChatView.class);
+						createNotification(context, pop_priv, null, "R.I.G Mobile", "Direct Msg From: " + i.sender, 99946);
+						doNotify();
+				    }
 					
 					
 					i.Text = "<font color=" + Stickies.user.directColor
@@ -271,6 +290,7 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 					.getSystemService(Context.VIBRATOR_SERVICE);
 
 			r.play();
+			v.vibrate(1000);
 		} catch (Exception e) {
 		}
 	}
@@ -293,7 +313,7 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 		Notification noti = new NotificationCompat.Builder(context)
 				.setContentTitle(title).setContentText(message)
 				.setSmallIcon(R.drawable.ic_launcher).setContentIntent(pIntent)
-				.addAction(R.drawable.ic_launcher, action, pIntent).build();
+				.build();
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		// Hide the notification after its selected

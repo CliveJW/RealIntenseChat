@@ -1,7 +1,9 @@
 package za.co.rigaming.realintensechat;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -35,7 +37,8 @@ public class WebviewForLogin extends Activity {
 		pb.setIndeterminate(true);
 		WebViewClient wvc = new WebViewClient();
 		webview.setVisibility(View.INVISIBLE);
-		final TextView bro = (TextView) findViewById(R.id.bro);		
+		final TextView bro = (TextView) findViewById(R.id.bro);
+		bro.setText(getString());
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -84,6 +87,29 @@ public class WebviewForLogin extends Activity {
 	}
 	
 	
-	
+	public static String getString() {
+		Random rand = new Random();
+		
+		List<String> my_words = new LinkedList<String>();
+		my_words.add("Finding the droids you are looking for....");
+		my_words.add("Squeeking the beaver");
+		my_words.add("Reticulating splines");
+		my_words.add("Making http data babies with Facebook");
+		my_words.add("Stealing your photos, all up in yo business");
+		my_words.add("Wikki Wikki");
+		my_words.add("Don't be evil!!");
+		my_words.add(":-) 	:-| 	:-( 	:-0 	:-> 	:-D 	d(0-o)b 	(x-x) 	 (o)(o)		(0-0) 	:-P");
+		my_words.add("Loggin you into bAs3F0oK");
+		my_words.add("All your base are belong to us");
+		my_words.add("RIG.. Aint is just grand");
+		my_words.add("Up Up Down Down Left Right Left Right B A SELECT START");
+		my_words.add("You are not reading this.. ");
+		my_words.add("All hail Krylik...");
+		
+		
+		int choice = rand.nextInt(my_words.size());
+		
+		return my_words.get(choice);
+	}
 	
 }

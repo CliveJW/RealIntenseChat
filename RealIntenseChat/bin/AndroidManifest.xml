@@ -6,6 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <uses-sdk
         
@@ -21,7 +22,7 @@
         <activity
             android:name=".WebviewForLogin"
             android:label="R.I.G Mobile"
-            android:theme="@android:style/Theme.DeviceDefault.Light"
+            android:theme="@android:style/Theme.Holo"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +35,7 @@
             android:exported="true"
             android:label="Send Message"
             android:screenOrientation="sensorLandscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            android:theme="@android:style/Theme.Holo" >
         </activity>
 
         <service

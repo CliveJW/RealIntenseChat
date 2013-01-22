@@ -3,7 +3,6 @@
 	<name>RealIntenseChat</name>
 	<comment></comment>
 	<projects>
-		<project>library</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

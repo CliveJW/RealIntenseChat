@@ -21,9 +21,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -44,8 +47,13 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import za.co.rigaming.realintensechat.Automation;
 
-public class ChatView extends Activity {
-	
+import com.slidingmenu.*;
+import com.slidingmenu.lib.app.SlidingActivity;
+
+public class ChatView extends SlidingActivity {
+
+	private GestureDetector myGesture;
+
 	public class User {
 		String id;
 		String name;
@@ -55,56 +63,56 @@ public class ChatView extends Activity {
 		String directColor;
 	}
 
-	 static Button post;
-	 static EditText input;
-	 
-	 static User user;
-	 static TextView username;
-	 static TextView pvtResip;
-	 static TextView unread;
-	 static ListView lv;
-	 static Handler mHandler;
-	 static ListView mainListView;
-	 static ViewGroup vg;
-	 static LayoutInflater mInflater;
-	 static ScrollView sv;
-	 static JSONArray jsonMainArr;
-	 static String userNamePvt;
-	 static Context context;
-	 static DefaultHttpClient dhc;
-	 static ImageView imgV;
+	static Button post;
+	static EditText input;
+
+	static User user;
+	static TextView username;
+	static TextView pvtResip;
+	static TextView unread;
+	static ListView lv;
+	static Handler mHandler;
+	static ListView mainListView;
+	static ViewGroup vg;
+	static LayoutInflater mInflater;
+	static ScrollView sv;
+	static JSONArray jsonMainArr;
+	static String userNamePvt;
+	static Context context;
+	static DefaultHttpClient dhc;
+	static ImageView imgV;
 	// static String lastID;
-	 static ProgressBar pg;
-	
-	
+	static ProgressBar pg;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		
+	public void onCreate(Bundle savedInstanceState) {
+
 		CookieSyncManager.createInstance(this);
-		
-		
-		
+
 		mHandler = new Handler();
-		
+
 		user = new User();
 
 		context = getApplicationContext();
-		
+
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
 		StrictMode.setThreadPolicy(policy);
-		
+
 		setContentView(R.layout.postmessage);
-		pg = (ProgressBar) findViewById(R.id.progressBarjkjkj1);
+		setBehindContentView(R.layout.postmessage);
 		
+		pg = (ProgressBar) findViewById(R.id.progressBarjkjkj1);
+		imgV = (ImageView) findViewById(R.id.imageView1);
+		float f = (float) 0.1;
+		imgV.setAlpha(f);
 		post = (Button) findViewById(R.id.button1);
 		input = (EditText) findViewById(R.id.chat_input);
 		Stickies.chatView = (TextView) findViewById(R.id.chatView);
 		Stickies.chatView.setTextSize(11);
 		Stickies.chatView.setMovementMethod(new ScrollingMovementMethod());
-		
+
 		username = (TextView) findViewById(R.id.user);
 		unread = (TextView) findViewById(R.id.unread);
 
@@ -142,7 +150,7 @@ public class ChatView extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				new GetChatMessages().execute();
-				//input.setText("");
+				// input.setText("");
 				// mHandler.postDelayed(chatRefresh, 5000);
 
 			}
@@ -162,9 +170,9 @@ public class ChatView extends Activity {
 				return false;
 			}
 		});
-		
-		//mHandler.post(GetChatMessages.chatRefresh);
-		
+
+		// mHandler.post(GetChatMessages.chatRefresh);
+
 		Automation.startAutomaticRefresh(context);
 		new GetUserDetails().execute();
 		super.onCreate(savedInstanceState);
@@ -218,7 +226,8 @@ public class ChatView extends Activity {
 
 				String pvt_txt = (String) pvtResip.getText().toString();
 
-				for (int i = 0; i < GetUsers.userResults.length(); i++) { // **line 2**
+				for (int i = 0; i < GetUsers.userResults.length(); i++) { // **line
+																			// 2**
 					try {
 						JSONObject childJSONObject = GetUsers.userResults
 								.getJSONObject(i);
@@ -246,14 +255,11 @@ public class ChatView extends Activity {
 
 	};
 
-
 	public static void doMsg() {
-		
+
 		new GetUserDetails().execute();
-		
+
 	}
-	
-	
 
 	@Override
 	protected void onResume() {
@@ -270,16 +276,15 @@ public class ChatView extends Activity {
 
 	@Override
 	protected void onStop() {
-		
+
 		super.onStop();
 	}
 
 	@Override
 	protected void onRestart() {
-		
+
 		super.onRestart();
 	}
-	
-	
 
+	
 }
