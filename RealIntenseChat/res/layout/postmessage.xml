@@ -6,33 +6,15 @@
     android:background="@android:color/black"
     android:gravity="right"
     android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/button1"
+        <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/scrollView1"
-        android:text="Post" />
-
-    <TextView
-        android:id="@+id/user"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/unreadpm"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="User"
-        android:textSize="14sp"/>
-
-    <TextView
-        android:id="@+id/unread"
-        android:layout_width="30dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/user"
-        android:text="0"
-        android:textSize="14sp"/>
+        android:layout_toLeftOf="@+id/userlist"
+        android:src="@drawable/logo" />
 
     <ListView
         android:id="@+id/userlist"
@@ -40,41 +22,31 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button1"
         android:layout_alignLeft="@+id/button1"
-        android:layout_below="@+id/unreadpm"
-        android:layout_marginTop="10dp" >
+        android:layout_below="@+id/unreadpm" 
+        android:background="@layout/border"
+        android:layout_margin="1dp">
 
     </ListView>
 
-    <TextView
-        android:id="@+id/unreadpm"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user"
-        android:layout_toLeftOf="@+id/unread"
-        android:text="RigMail:"
-        android:textSize="14sp" />
-
     <ScrollView
         android:id="@+id/scrollView1"
-       android:layout_width="wrap_content"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
+        android:layout_above="@+id/chat_input"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/user"
+        android:layout_below="@+id/progressBarjkjkj1"
+        android:layout_margin="1dp"
+        android:layout_toLeftOf="@+id/userlist"
         android:background="@layout/border"
-        android:overScrollMode="always">
-<TextView
-        android:id="@+id/chatView"
-         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="false"
-        
-        android:text="" />
-        
+        android:overScrollMode="always" >
+
+        <TextView
+            android:id="@+id/chatView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="" 
+            android:freezesText="true"/>
     </ScrollView>
 
     <EditText
@@ -84,8 +56,68 @@
         android:layout_alignLeft="@+id/scrollView1"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/scrollView1"
-        android:layout_alignTop="@+id/button1"
         android:background="@layout/border"
         android:ems="10" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/scrollView1"
+        android:text="Blah Blah"
+        android:textSize="9sp" />
+
+ <TextView
+     android:id="@+id/user"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_alignLeft="@+id/unreadpm"
+     android:layout_alignParentTop="true"
+     android:layout_alignRight="@+id/unread"
+     android:text="User"
+     android:textSize="16sp" 
+     android:freezesText="true"/>
+
+    <TextView
+        android:id="@+id/unreadpm"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/progressBar1"
+        android:layout_below="@+id/user"
+        android:text="RigMail:"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBarjkjkj1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/unreadpm"
+        android:layout_alignLeft="@+id/userlist"
+        android:layout_alignRight="@+id/userlist" />
+
+    <TextView
+        android:id="@+id/unread"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/unreadpm"
+        android:layout_alignBottom="@+id/unreadpm"
+        android:layout_alignRight="@+id/unreadpm"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+    <DigitalClock
+        android:id="@+id/digitalClock1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/chat_input"
+        android:layout_alignBottom="@+id/chat_input"
+        android:layout_alignRight="@+id/chat_input"
+        android:layout_marginRight="10dp"
+        android:text="DigitalClock" />
 
 </RelativeLayout>

@@ -2,26 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="za.co.rigaming.realintensechat"
     android:versionCode="1"
-    android:versionName="1.0" 
-    >
-    
-     <uses-permission android:name="android.permission.INTERNET" />
-     <uses-permission android:name="android.permission.VIBRATE" />
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-sdk
+        
         android:minSdkVersion="14"
         android:targetSdkVersion="15" />
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" 
-        android:hardwareAccelerated="true">
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="za.co.rigaming.realintensechat.MainActivity"
-            android:label="@string/app_name" 
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" 
+            android:name=".WebviewForLogin"
+            android:label="R.I.G Mobile"
+            android:theme="@android:style/Theme.DeviceDefault.Light"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,32 +30,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WebviewForLogin"
-            android:label="Facebook Login" 
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" 
-            android:screenOrientation="sensorLandscape">
-        </activity>
-         <activity
-            android:name="za.co.rigaming.realintensechat.GetMessages"
+            android:name="za.co.rigaming.realintensechat.ChatView"
+            android:exported="true"
             android:label="Send Message"
-            android:theme="@android:style/Theme.DeviceDefault.NoActionBar" 
             android:screenOrientation="sensorLandscape"
-            android:exported="true">
-           
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
         </activity>
-        <activity
-            android:name="za.co.rigaming.realintensechat.GetUsers"
-            android:label="Send Message" >
-        </activity>
-        <activity
-            android:name="za.co.rigaming.realintensechat.PutName"
-            android:label="Put Name" >
-             <intent-filter>
-    			<category android:name="android.intent.category.DEFAULT" />
-    			<action android:name="android.intent.action.VIEW" />
-    			<data android:scheme="rigaming" />  
-			</intent-filter>
-        </activity>
+
+        <service
+            android:name=".RefreshService"
+            android:enabled="true"
+            android:label="RIGMobileChatPoller" >
+        </service>
     </application>
 
 </manifest>

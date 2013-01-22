@@ -17,26 +17,25 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 		
-		CookieSyncManager.createInstance(this);
-		
-		Button login, getUsers, getMessages;
-		
+
+		Button login;
+
 		login = (Button) findViewById(R.id.login);
-		
-		
+
 		login.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
-				Intent startLogin = new Intent(MainActivity.this, WebviewForLogin.class);
+				Intent startLogin = new Intent(MainActivity.this,
+						WebviewForLogin.class);
 				startActivity(startLogin);
 				finish();
-				
+
 			}
 		});
-		
-		
+
 	}
 
 	@Override
