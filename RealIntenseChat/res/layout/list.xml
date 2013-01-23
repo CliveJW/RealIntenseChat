@@ -15,8 +15,8 @@
         android:layout_height="wrap_content" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="240dp"
+            android:layout_height="474dp"
             android:layout_gravity="center_vertical"
             android:orientation="vertical" >
             
@@ -39,25 +39,46 @@
                 
                 android:layout_weight="1"
                 android:text="Notifications:"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:textAppearance="?android:attr/textAppearanceLarge" 
+                android:background="@android:color/darker_gray"/>
 
             <Switch
                 android:id="@+id/pvt_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Pvt......" />
+                android:text="Pvt"
+                android:textSize="14sp" />
 
             <Switch
                 android:id="@+id/pms_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PM&apos;s..." />
+                android:text="PM&apos;s" 
+                android:textSize="14sp"/>
 
             <Switch
                 android:id="@+id/msg_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="[MSG]." />
+                android:text="[MSG]" 
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/darker_gray"
+                android:text="System:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Switch
+                android:id="@+id/refresh_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="AutoRefresh"
+                android:textSize="14sp" />
+
         </LinearLayout>
     </ScrollView>
 

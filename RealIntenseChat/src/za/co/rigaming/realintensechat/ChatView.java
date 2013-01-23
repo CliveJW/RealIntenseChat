@@ -99,11 +99,12 @@ public class ChatView extends SlidingActivity {
 		this.setSlidingActionBarEnabled(true);
 		setContentView(R.layout.postmessage);
 		setBehindContentView(R.layout.list);
+		
 		SlidingMenu sm = getSlidingMenu();
 		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);
 		
 		v = getWindow().getDecorView();
-
+	
 		CookieSyncManager.createInstance(this);
 		settings = Settings.getSettings(getApplicationContext());
 		
