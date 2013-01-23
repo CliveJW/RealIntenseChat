@@ -119,10 +119,5 @@
         android:layout_alignRight="@+id/chat_input"
         android:layout_marginRight="10dp"
         android:text="DigitalClock" />
-    
-     <com.devspark.sidenavigation.SideNavigationView
-        android:id="@+id/side_navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
+ 
 </RelativeLayout>

@@ -52,8 +52,6 @@ import com.slidingmenu.lib.app.SlidingActivity;
 
 public class ChatView extends SlidingActivity {
 
-	private GestureDetector myGesture;
-
 	public class User {
 		String id;
 		String name;
@@ -86,6 +84,14 @@ public class ChatView extends SlidingActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		context = getApplicationContext();
+		View v = getWindow().getDecorView();
+		this.setSlidingActionBarEnabled(true);
+		setContentView(R.layout.postmessage);
+		setBehindContentView(R.layout.list);
+		getSlidingMenu().setBehindOffsetRes(R.dimen.actionbar_home_width);
+		v = getWindow().getDecorView();
 
 		CookieSyncManager.createInstance(this);
 
@@ -93,16 +99,9 @@ public class ChatView extends SlidingActivity {
 
 		user = new User();
 
-		context = getApplicationContext();
-
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
 
-		StrictMode.setThreadPolicy(policy);
-
-		setContentView(R.layout.postmessage);
-		setBehindContentView(R.layout.postmessage);
-		
 		pg = (ProgressBar) findViewById(R.id.progressBarjkjkj1);
 		imgV = (ImageView) findViewById(R.id.imageView1);
 		float f = (float) 0.1;
@@ -175,7 +174,7 @@ public class ChatView extends SlidingActivity {
 
 		Automation.startAutomaticRefresh(context);
 		new GetUserDetails().execute();
-		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override
@@ -286,5 +285,4 @@ public class ChatView extends SlidingActivity {
 		super.onRestart();
 	}
 
-	
 }

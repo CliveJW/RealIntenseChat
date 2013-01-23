@@ -35,9 +35,13 @@
             android:exported="true"
             android:label="Send Message"
             android:screenOrientation="sensorLandscape"
-            android:theme="@android:style/Theme.Holo" >
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
         </activity>
-
+	<activity 
+	    android:name=".ExampleSlidingActivity"
+	    android:label="WOOT"
+	    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+	</activity>
         <service
             android:name=".RefreshService"
             android:enabled="true"
