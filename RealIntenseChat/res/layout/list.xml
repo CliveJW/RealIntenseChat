@@ -1,92 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/list_padding"
-    android:paddingRight="@dimen/list_padding" 
-    android:background="@drawable/llama">
+    android:paddingRight="@dimen/list_padding" >
 
-    <Space
+   
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_height="wrap_content" >
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="42dp"
-        android:layout_marginTop="46dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical" >
+            
+            
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Op-shins"
-        android:layout_marginBottom="20dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:textColor="@android:color/black"/>
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView1"
-        android:text="Auto Refresh:"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:layout_marginBottom="10dp"
-        android:textColor="@android:color/black"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/textView2" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                
+                android:layout_weight="1"
+                android:text="Notifications:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView2"
-        android:text="Notification for pvt:"
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:layout_marginBottom="10dp"
-        android:textColor="@android:color/black"/>
+            <Switch
+                android:id="@+id/pvt_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pvt......" />
 
-    <CheckBox
-        android:id="@+id/checkBox2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3" />
+            <Switch
+                android:id="@+id/pms_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PM&apos;s..." />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_below="@+id/textView3"
-        android:text="Notification for Direct Msg: "
-        android:textAppearance="?android:attr/textAppearanceMedium" 
-        android:textColor="@android:color/black"/>
+            <Switch
+                android:id="@+id/msg_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="[MSG]." />
+        </LinearLayout>
+    </ScrollView>
 
-    <CheckBox
-        android:id="@+id/checkBox3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4" 
-        android:textColor="@android:color/black"/>
-
-</RelativeLayout>
+</LinearLayout>

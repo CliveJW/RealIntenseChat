@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -149,11 +149,22 @@ public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 	// TODO Auto-generated method stub
 
 }
-
+StringBuilder sf;
 
 @Override
 public void onCreate(SQLiteDatabase db) {
-	// TODO Auto-generated method stub
+	db.execSQL(
+	        "create table if not exists settings (\"id\" INTEGER NOT NULL, \"notifyMsg\" TEXT NOT NULL, \"notifyPm\" TEXT NOT NULL, \"notifyPvt\" TEXT NOT NULL"
+	        + ");"
+	      );
+	
+	ContentValues cv = new ContentValues();
+	cv.put("id", 1);
+	cv.put("notifyMsg", "true");
+	cv.put("notifyPvt", "true");
+	cv.put("notifyPm", "true");
+	
+	db.insert("settings", null, cv);
 
 }
 

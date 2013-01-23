@@ -38,16 +38,21 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import za.co.rigaming.realintensechat.Automation;
+import za.co.rigaming.realintensechat.GeneralSettings.Settings;
 
 import com.slidingmenu.*;
+import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
 
 public class ChatView extends SlidingActivity {
@@ -81,7 +86,11 @@ public class ChatView extends SlidingActivity {
 	static ImageView imgV;
 	// static String lastID;
 	static ProgressBar pg;
-
+	static Switch pm;
+	static Switch pvt;
+	static Switch msg;
+	static Settings settings;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,10 +99,18 @@ public class ChatView extends SlidingActivity {
 		this.setSlidingActionBarEnabled(true);
 		setContentView(R.layout.postmessage);
 		setBehindContentView(R.layout.list);
-		getSlidingMenu().setBehindOffsetRes(R.dimen.actionbar_home_width);
+		SlidingMenu sm = getSlidingMenu();
+		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);
+		
 		v = getWindow().getDecorView();
 
 		CookieSyncManager.createInstance(this);
+		settings = Settings.getSettings(getApplicationContext());
+		
+		Log.i("APP SETTINGS", settings.msg_switch);
+		Log.i("APP SETTINGS", settings.pm_switch);
+		Log.i("APP SETTINGS", settings.pvt_switch);
+		
 
 		mHandler = new Handler();
 
@@ -117,6 +134,13 @@ public class ChatView extends SlidingActivity {
 
 		mainListView = (ListView) findViewById(R.id.userlist);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
+		
+		pvt = (Switch) findViewById(R.id.pvt_switch);
+		msg = (Switch) findViewById(R.id.msg_switch);
+		pm = (Switch) findViewById(R.id.pms_switch);
+		
+		setSettings();
+		
 		registerForContextMenu(mainListView);
 
 		// Set the ArrayAdapter as the ListView's adapter.
@@ -167,6 +191,54 @@ public class ChatView extends SlidingActivity {
 
 				}
 				return false;
+			}
+		});
+		
+		pm.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					settings.pm_switch = "true";
+					settings.saveSettings(context);
+				} else {
+					settings.pm_switch = "false";
+					settings.saveSettings(context);
+				}
+				
+				
+			}
+		});
+		
+		pvt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					settings.pvt_switch = "true";
+					settings.saveSettings(context);
+				} else {
+					settings.pvt_switch = "false";
+					settings.saveSettings(context);
+				}
+				
+				
+			}
+		});
+		
+		msg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (isChecked) {
+					settings.msg_switch = "true";
+					settings.saveSettings(context);
+				} else {
+					settings.msg_switch = "false";
+					settings.saveSettings(context);
+				}
+				
+				
 			}
 		});
 
@@ -283,6 +355,28 @@ public class ChatView extends SlidingActivity {
 	protected void onRestart() {
 
 		super.onRestart();
+	}
+	
+	public void setSettings() {
+		Settings set = Settings.getSettings(context);
+		
+		if (set.msg_switch.equals("true")) {
+			msg.setChecked(true);
+		} else {
+			msg.setChecked(false);
+		}
+		
+		if (set.pvt_switch.equals("true")) {
+			pvt.setChecked(true);
+		} else {
+			pvt.setChecked(false);
+		}
+		
+		if (set.pm_switch.equals("true")) {
+			pm.setChecked(true);
+		} else {
+			pm.setChecked(false);
+		}
 	}
 
 }

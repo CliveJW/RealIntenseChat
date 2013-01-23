@@ -2,6 +2,8 @@ package za.co.rigaming.realintensechat;
 
 import java.net.URLConnection;
 
+import org.acra.*;
+import org.acra.annotation.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -20,11 +22,20 @@ import android.support.v4.util.TimeUtils;
 import android.webkit.CookieManager;
 import java.util.concurrent.TimeUnit;
 
+@ReportsCrashes(formKey = "dFJNcVdBTm4tQzUzbncwb3FUbUQzUWc6MQ")
 public class AppSettings extends Application {
 	private static final DefaultHttpClient client = createClient();
-	@Override
-	public void onCreate(){
-	}
+	
+	
+		 @Override
+		  public void onCreate() {
+		      super.onCreate();
+
+		      // The following line triggers the initialization of ACRA
+		      ACRA.init(this);
+		  }
+	
+	
 	static DefaultHttpClient getClient() {
 		return client;
 	}

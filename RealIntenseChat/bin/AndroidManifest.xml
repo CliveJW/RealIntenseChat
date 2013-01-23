@@ -18,7 +18,7 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" android:name="AppSettings">
         <activity
             android:name=".WebviewForLogin"
             android:label="R.I.G Mobile"
@@ -48,5 +48,6 @@
             android:label="RIGMobileChatPoller" >
         </service>
     </application>
+    
 
 </manifest>
