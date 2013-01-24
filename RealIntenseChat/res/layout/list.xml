@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/RelativeLayout1"
             android:layout_width="240dp"
             android:layout_height="451dp"
             android:layout_gravity="center_vertical"
@@ -23,21 +24,29 @@
                 android:id="@+id/imageView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
                 android:layout_marginBottom="10dp"
                 android:src="@drawable/ic_launcher" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/imageView1"
                 android:layout_weight="1"
                 android:background="@android:color/darker_gray"
                 android:text="Notifications:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
-             <TextView
+
+            <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView3"
+                android:layout_alignParentLeft="true"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -45,6 +54,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/pvt_switch"
+                android:layout_alignParentLeft="true"
                 android:text="Pvt:"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -52,6 +63,8 @@
                 android:id="@+id/pvt_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
                 android:background="@layout/border"
                 android:textColor="@android:color/white" />
 
@@ -59,20 +72,26 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PM's:"
+                android:layout_above="@+id/pms_switch"
+                android:layout_alignParentLeft="true"
+                android:text="PM&apos;s:"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
                 android:id="@+id/pms_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
                 android:background="@layout/border"
                 android:textColor="@android:color/white" />
-            
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/msg_switch"
+                android:layout_alignParentLeft="true"
                 android:text="[MSG]:"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -80,13 +99,17 @@
                 android:id="@+id/msg_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
                 android:background="@layout/border"
                 android:textColor="@android:color/white" />
-            
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView1"
+                android:layout_alignParentLeft="true"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -94,20 +117,27 @@
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
                 android:background="@android:color/darker_gray"
                 android:text="System:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/textView4"
+                android:layout_alignParentLeft="true"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-            
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/refresh_switch"
+                android:layout_alignParentLeft="true"
                 android:text="Auto Refresh:"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -115,14 +145,18 @@
                 android:id="@+id/refresh_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/refresh_text"
+                android:layout_alignParentRight="true"
                 android:layout_gravity="right"
                 android:background="@layout/border"
-                android:textColor="@android:color/white"/>
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/refresh_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/refresh_time_spinner"
+                android:layout_alignParentLeft="true"
                 android:text="Refresh Rate/sec"
                 android:textColor="@android:color/white"
                 android:textSize="14sp" />
@@ -131,16 +165,20 @@
                 android:id="@+id/refresh_time_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/screen_on_check"
+                android:layout_alignParentLeft="true"
                 android:background="@layout/border" />
 
             <CheckBox
                 android:id="@+id/screen_on_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
                 android:background="@layout/border"
                 android:text="Keep Screen On:"
                 android:textColor="@android:color/white" />
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 </LinearLayout>
