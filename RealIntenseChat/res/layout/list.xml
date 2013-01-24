@@ -19,8 +19,10 @@
             android:layout_height="474dp"
             android:layout_gravity="center_vertical"
             android:orientation="vertical" >
-            
-            
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -47,21 +49,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Pvt"
-                android:textSize="14sp" />
+                android:textSize="14sp" 
+                android:textColor="@android:color/white"/>
 
             <Switch
                 android:id="@+id/pms_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PM&apos;s" 
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="@android:color/white"/>
 
             <Switch
                 android:id="@+id/msg_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="[MSG]" 
-                android:textSize="14sp"/>
+                android:textSize="14sp"
+                android:textColor="@android:color/white"/>
 
             <TextView
                 android:id="@+id/textView1"
@@ -76,8 +81,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="AutoRefresh"
-                android:textSize="14sp" />
+                android:text="Auto Refresh"
+                android:textSize="14sp" 
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/refresh_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Refresh Rate/sec" 
+                android:textSize="14sp"
+                android:textColor="@android:color/white"/>
+
+            <Spinner
+                android:id="@+id/refresh_time_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:id="@+id/screen_on_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keep Screen On:" 
+                android:textColor="@android:color/white"/>
 
         </LinearLayout>
     </ScrollView>

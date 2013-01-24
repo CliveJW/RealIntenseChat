@@ -35,114 +35,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     super(context, DATABASE_NAME, null, DATABASE_VERSION);
   }
   
-  public class table {
-	  String name;
-	  List<Column> columns;
-
-	  public String generateTableCreate(List<Column> columns) {
-		  String base = "create table " + name + "(id INTEGER PRIMARY KEY AUTOINCREMENT, ";
-		  for (Column c : columns) {
-			  String name = c.name;
-			  String type = c.type;
-			  String nullable = c.nullable;
-			  base = base + ", " + name + " " + type.toUpperCase() + " " +  nullable.toUpperCase();
-		  }
-		  base = base + ");";
-		  return base;
-	  }
-  }
-  
-  public class Column {
-	  String name;
-	  String type;
-	  String nullable;
-
-	  public Column getColumn(String n, String t, String nu) {
-		  Column.this.name = n;
-		  Column.this.type = t;
-		  Column.this.nullable = nu;
-		  return this;
-	  }
-  }
-  
-  public class Type {
-	  final String integer = "INTEGER";
-	  final String not_null = "NOT NULL";
-	  final String can_null = "";
-
-	  public String getVarchar(String num) {
-				  return "VARCHAR(" + num + ")";
-			  }
-
-	  public String getInt() {
-		  return "INTEGER";
-	  }
-	  public String getNotNull() {
-		  return "NOT NULL";
-	  }
-	  public String getNull() {
-		  return "";
-	  }
-  }
-  
-  public void test() {
-
-	  table t = new table();
-	  t.name = "Test";
-
-	  List<Column> col = new ArrayList<MySQLiteHelper.Column>();
-
-	  Column id = new Column().getColumn(COLUMN_ID, new Type().getInt(), new Type().getNotNull());
-	  Column payload = new Column().getColumn(COLUMN_ID, new Type().getVarchar("50"), new Type().getNull());
-	  Column endpoint = new Column().getColumn(COLUMN_ENDPOINT, new Type().getVarchar("50"), new Type().getNull());
-
-	  col.add(id);
-	  col.add(payload);
-	  col.add(endpoint);
-
-    // compiledString.append(")");
-
-    // //db.execSQL(compiledString);
-
-
-
-	t.generateTableCreate(col);
-
-
-  }
-
-  
-//  public void createTable( String tableName, List<Array> columns[] ) {
-//	  
-//	  String colName = null;
-//	  String type = null;
-//	  boolean canBeNull = false;
-//    String nullValue = null;
-//    StringBuilder compiledString = new StringBuilder();
-//
-//    compiledString.append("CREATE TABLE " + tableName + " ( ");
-//	  
-//	  for ( List l : columns ) {
-//		  
-//		  colName = (String) l.get(0);
-//		  type = (String) l.get(1);
-//		  canBeNull = Boolean.valueOf((String) l.get(2));
-//      
-//		  if ( canBeNull == true ) {
-//        nullValue = "null"
-//      } else {
-//        nullValue = "not null"
-//      }
-//
-//		  compiledString.append(colName + " " + type + " " + nullValue)
-//		  
-//	  }
-//
-//    compiledString.append(")");
-//
-//    .execSQL(compiledString)
-//	  
-//  }
+ 
 
 @Override
 public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -154,16 +47,25 @@ StringBuilder sf;
 @Override
 public void onCreate(SQLiteDatabase db) {
 	db.execSQL(
-	        "create table if not exists settings (\"id\" INTEGER NOT NULL, \"notifyMsg\" TEXT NOT NULL, \"notifyPm\" TEXT NOT NULL, \"notifyPvt\" TEXT NOT NULL"
+	        "create table if not exists settings (" +
+	        "\"id\" INTEGER NOT NULL, " +
+	        "\"notifyMsg\" INTEGER NOT NULL, " +
+	        "\"notifyPm\" INTEGER NOT NULL, " +
+	        "\"notifyPvt\" INTEGER NOT NULL, " +
+	        "\"refresh\" INTEGER NOT NULL, " +
+	        "\"refresh_rate\" INTEGER NOT NULL, " +
+	        "\"screen_on\" INTEGER NOT NULL"
 	        + ");"
 	      );
 	
 	ContentValues cv = new ContentValues();
 	cv.put("id", 1);
-	cv.put("notifyMsg", "true");
-	cv.put("notifyPvt", "true");
-	cv.put("notifyPm", "true");
-	
+	cv.put("notifyMsg", 1);
+	cv.put("notifyPvt", 1);
+	cv.put("notifyPm", 1);
+	cv.put("refresh", 1);
+	cv.put("refresh_rate", 30);
+	cv.put("screen_on", 0);
 	db.insert("settings", null, cv);
 
 }

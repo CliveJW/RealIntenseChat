@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import za.co.rigaming.realintensechat.Elements.*;
+import za.co.rigaming.realintensechat.GeneralSettings.Settings;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
@@ -40,6 +41,7 @@ import za.co.rigaming.realintensechat.NotificationGenerator;
 public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 
 	Context context = ChatView.context;
+	Settings set = Settings.getSettings(context);
 	public static boolean mustNotify = false;
 	String lastID = null;
 	NotificationManager notificationManager = (NotificationManager) context
@@ -185,9 +187,11 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 				    if (isActivityFound) {
 				        
 				    } else {
+				    	if (set.pvt_switch){
 				    	Intent pop_priv = new Intent(context, ChatView.class);
 						createNotification(context, pop_priv, null, "R.I.G Mobile", "Pvt From:  " + i.sender, 99944);
 						doNotify();
+				    }
 				    }
 
 					continue;
@@ -208,9 +212,12 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 				    if (isActivityFound) {
 				        
 				    } else {
+				    	if (set.msg_switch) {
 				    	Intent pop_priv = new Intent(context, ChatView.class);
+				    	pop_priv.setAction("android.intent.action.MAIN");
 						createNotification(context, pop_priv, null, "R.I.G Mobile", "Direct Msg From: " + i.sender, 99946);
 						doNotify();
+				    	}
 				    }
 					
 					

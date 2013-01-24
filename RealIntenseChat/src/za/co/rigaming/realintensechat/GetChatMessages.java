@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import za.co.rigaming.realintensechat.Elements.*;
+import za.co.rigaming.realintensechat.GeneralSettings.Settings;
 
 import android.content.Context;
 import android.media.Ringtone;
@@ -29,8 +30,9 @@ import android.util.Log;
 import android.view.View;
 
 public class GetChatMessages extends AsyncTask<String, Object, Object> {
-
+	
 	Context context = ChatView.context;
+	
 	public static boolean mustNotify = false;
 	String lastID = null;
 
@@ -86,6 +88,7 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 
 	@Override
 	protected Object doInBackground(String... params) {
+		Settings set = Settings.getSettings(context);
 		ChatView.pg.setIndeterminate(true);
 		if (ChatView.input.isSelected()){
 			return params;
@@ -165,7 +168,9 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 							+ "*PVT* <font color=" + i.privColor + ">"
 							+ i.Text + "</font>";
 					publishProgress(spanToBe);
-					mustNotify = true;
+					if (set.pvt_switch) {
+						mustNotify = true;
+					}
 					continue;
 				}
 
@@ -176,7 +181,10 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 							+ ">" + i.Text + "</font><br>";
 					spanToBe = name + i.Text;
 					publishProgress(spanToBe);
-					//mustNotify = true;
+					if (set.msg_switch) {
+						Log.i("POES CUNT", String.valueOf(set.msg_switch));
+						mustNotify = true;
+					}
 					continue;
 
 				} 

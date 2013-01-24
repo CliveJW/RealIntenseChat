@@ -10,6 +10,8 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import za.co.rigaming.realintensechat.GeneralSettings.Settings;
+
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -37,6 +39,7 @@ public class GetUserDetails extends AsyncTask<Object, String, String> {
 	}
 	
 	Context context = ChatView.context;
+	Settings set = Settings.getSettings(context);
 	@Override
 	protected String doInBackground(Object... params) {
 		
@@ -84,14 +87,18 @@ public class GetUserDetails extends AsyncTask<Object, String, String> {
 		    if (isActivityFound) {
 		    	publishProgress();
 		    } else {
+		    	if (set.pvt_switch){
 		    	Intent pop_msg = new Intent(context, ChatView.class);
+		    	pop_msg.setAction("android.intent.action.MAIN");
 				createNotification(context, pop_msg, null, "R.I.G Mobile", "You have " + user.unreadPM.toString() + " unread PM's", 99945);
-				doNotify();
 				
+					doNotify();
+				}
+				publishProgress();
 		    }
 
 			
-			publishProgress();
+			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

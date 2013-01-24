@@ -31,20 +31,24 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieSyncManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -89,7 +93,11 @@ public class ChatView extends SlidingActivity {
 	static Switch pm;
 	static Switch pvt;
 	static Switch msg;
+	static Spinner spinner;
+	static Switch refresh;
 	static Settings settings;
+	static CheckBox screen_on;
+	static ArrayAdapter<CharSequence> adapter;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -108,9 +116,9 @@ public class ChatView extends SlidingActivity {
 		CookieSyncManager.createInstance(this);
 		settings = Settings.getSettings(getApplicationContext());
 		
-		Log.i("APP SETTINGS", settings.msg_switch);
-		Log.i("APP SETTINGS", settings.pm_switch);
-		Log.i("APP SETTINGS", settings.pvt_switch);
+		Log.i("APP SETTINGS", String.valueOf(settings.msg_switch));
+		Log.i("APP SETTINGS", String.valueOf(settings.pm_switch));
+		Log.i("APP SETTINGS", String.valueOf(settings.pvt_switch));
 		
 
 		mHandler = new Handler();
@@ -139,6 +147,14 @@ public class ChatView extends SlidingActivity {
 		pvt = (Switch) findViewById(R.id.pvt_switch);
 		msg = (Switch) findViewById(R.id.msg_switch);
 		pm = (Switch) findViewById(R.id.pms_switch);
+		refresh = (Switch) findViewById(R.id.refresh_switch);
+		spinner = (Spinner) findViewById(R.id.refresh_time_spinner);
+		adapter = ArrayAdapter.createFromResource(this,
+		        R.array.refresh_time_array, android.R.layout.simple_spinner_item);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner.setAdapter(adapter);
+		screen_on = (CheckBox) findViewById(R.id.screen_on_check);
+		
 		
 		setSettings();
 		
@@ -199,13 +215,10 @@ public class ChatView extends SlidingActivity {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					settings.pm_switch = "true";
-					settings.saveSettings(context);
-				} else {
-					settings.pm_switch = "false";
-					settings.saveSettings(context);
-				}
+				settings.pm_switch = isChecked;
+				settings.saveSettings(context);
+				setSettings();
+			
 				
 				
 			}
@@ -215,13 +228,11 @@ public class ChatView extends SlidingActivity {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					settings.pvt_switch = "true";
+				
+					settings.pvt_switch = isChecked;
 					settings.saveSettings(context);
-				} else {
-					settings.pvt_switch = "false";
-					settings.saveSettings(context);
-				}
+					setSettings();
+				
 				
 				
 			}
@@ -231,17 +242,52 @@ public class ChatView extends SlidingActivity {
 			
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					settings.msg_switch = "true";
-					settings.saveSettings(context);
-				} else {
-					settings.msg_switch = "false";
-					settings.saveSettings(context);
-				}
+				settings.msg_switch = isChecked;
+				settings.saveSettings(context);
+				setSettings();
+			
+				
+			}
+		});
+		
+		refresh.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				settings.refresh = isChecked;
+				settings.saveSettings(context);
+				setSettings();
+			
 				
 				
 			}
 		});
+		
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+		    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		        Object item = parent.getItemAtPosition(pos);
+		        String selection = (String) item;
+		        settings.refresh_rate = Integer.valueOf(selection);
+		        settings.saveSettings(context);
+		        setSettings();
+		    }
+		    public void onNothingSelected(AdapterView<?> parent) {
+		    }
+		});
+		
+		screen_on.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				
+					settings.screen_on = isChecked;
+					settings.saveSettings(context);
+					setSettings();
+				
+			}
+		});
+		
+		
 
 		// mHandler.post(GetChatMessages.chatRefresh);
 
@@ -361,22 +407,40 @@ public class ChatView extends SlidingActivity {
 	public void setSettings() {
 		Settings set = Settings.getSettings(context);
 		
-		if (set.msg_switch.equals("true")) {
-			msg.setChecked(true);
-		} else {
-			msg.setChecked(false);
-		}
 		
-		if (set.pvt_switch.equals("true")) {
-			pvt.setChecked(true);
-		} else {
-			pvt.setChecked(false);
-		}
+			msg.setChecked(set.msg_switch);
+
+			pvt.setChecked(set.pvt_switch);
+
+			pm.setChecked(set.pm_switch);
 		
-		if (set.pm_switch.equals("true")) {
-			pm.setChecked(true);
+		int spinnerPosition = adapter.getPosition(String.valueOf(set.refresh_rate));
+		spinner.setSelection(spinnerPosition);
+		
+		screen_on.setChecked(set.screen_on);
+		setScreenOn(set.screen_on);
+
+		
+		if (set.refresh) {
+			Automation.stopAutomaticRefresh(context);
+			Automation.startAutomaticRefresh(context);
+			refresh.setChecked(set.refresh);
 		} else {
-			pm.setChecked(false);
+			Automation.stopAutomaticRefresh(context);
+			refresh.setChecked(set.refresh);
+		}
+	}
+	
+	public void setScreenOn(boolean on) {
+		if (on) {
+			WindowManager.LayoutParams params = getWindow().getAttributes();
+			params.flags |= LayoutParams.FLAG_KEEP_SCREEN_ON;
+			params.screenBrightness = 1;
+			getWindow().setAttributes(params);
+		} else {
+			WindowManager.LayoutParams params = getWindow().getAttributes();
+			params.screenBrightness = -1;
+			getWindow().setAttributes(params);
 		}
 	}
 
