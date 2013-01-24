@@ -16,13 +16,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import za.co.rigaming.realintensechat.Elements.*;
 import za.co.rigaming.realintensechat.GeneralSettings.Settings;
-
 import android.content.Context;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.text.Html;

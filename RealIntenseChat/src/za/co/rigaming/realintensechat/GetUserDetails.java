@@ -11,12 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import za.co.rigaming.realintensechat.GeneralSettings.Settings;
-
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -89,7 +88,7 @@ public class GetUserDetails extends AsyncTask<Object, String, String> {
 		    } else {
 		    	if (set.pvt_switch){
 		    	Intent pop_msg = new Intent(context, ChatView.class);
-		    	pop_msg.setAction("android.intent.action.MAIN");
+		    	pop_msg.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				createNotification(context, pop_msg, null, "R.I.G Mobile", "You have " + user.unreadPM.toString() + " unread PM's", 99945);
 				
 					doNotify();

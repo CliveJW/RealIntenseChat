@@ -1,23 +1,16 @@
 package za.co.rigaming.realintensechat;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.http.cookie.Cookie;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
-
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;

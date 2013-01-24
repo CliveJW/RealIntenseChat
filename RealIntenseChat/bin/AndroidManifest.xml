@@ -10,8 +10,8 @@
 
     <uses-sdk
         
-        android:minSdkVersion="14"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +22,6 @@
         <activity
             android:name=".WebviewForLogin"
             android:label="R.I.G Mobile"
-            android:theme="@android:style/Theme.Holo"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,13 +33,11 @@
             android:name="za.co.rigaming.realintensechat.ChatView"
             android:exported="true"
             android:label="Send Message"
-            android:screenOrientation="sensorLandscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            android:screenOrientation="sensorLandscape" >
         </activity>
 	<activity 
 	    android:name=".ExampleSlidingActivity"
-	    android:label="WOOT"
-	    android:theme="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen">
+	    android:label="WOOT">
 	</activity>
         <service
             android:name=".RefreshService"

@@ -1,8 +1,9 @@
 package za.co.rigaming.realintensechat;
 
+import org.acra.ACRA;
+import org.acra.annotation.ReportsCrashes;
+
 import android.app.Application;
-import org.acra.*;
-import org.acra.annotation.*;
 
 @ReportsCrashes(formKey = "dFJNcVdBTm4tQzUzbncwb3FUbUQzUWc6MQ") 
 

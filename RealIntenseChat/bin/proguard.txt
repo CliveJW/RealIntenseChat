@@ -1,0 +1,18 @@
+# view res/layout/slidingmenumain.xml #generated:2
+-keep class com.slidingmenu.lib.SlidingMenu { <init>(...); }
+
+# view AndroidManifest.xml #generated:16
+-keep class za.co.rigaming.realintensechat.AppSettings { <init>(...); }
+
+# view AndroidManifest.xml #generated:32
+-keep class za.co.rigaming.realintensechat.ChatView { <init>(...); }
+
+# view AndroidManifest.xml #generated:38
+-keep class za.co.rigaming.realintensechat.ExampleSlidingActivity { <init>(...); }
+
+# view AndroidManifest.xml #generated:42
+-keep class za.co.rigaming.realintensechat.RefreshService { <init>(...); }
+
+# view AndroidManifest.xml #generated:22
+-keep class za.co.rigaming.realintensechat.WebviewForLogin { <init>(...); }
+

@@ -1,19 +1,15 @@
 package za.co.rigaming.realintensechat;
 
-import java.util.Calendar;
-
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.AlarmManager;
+import za.co.rigaming.realintensechat.GeneralSettings.Settings;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -21,12 +17,9 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -40,9 +33,9 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,13 +45,11 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import za.co.rigaming.realintensechat.Automation;
-import za.co.rigaming.realintensechat.GeneralSettings.Settings;
 
-import com.slidingmenu.*;
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
 
+@SuppressLint("NewApi")
 public class ChatView extends SlidingActivity {
 
 	public class User {
@@ -97,8 +88,13 @@ public class ChatView extends SlidingActivity {
 	static Switch refresh;
 	static Settings settings;
 	static CheckBox screen_on;
+	static CheckBox comp_pm;
+	static CheckBox comp_pvt;
+	static CheckBox comp_msg;
+	static CheckBox comp_refresh;
 	static ArrayAdapter<CharSequence> adapter;
-	
+	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -124,14 +120,19 @@ public class ChatView extends SlidingActivity {
 		mHandler = new Handler();
 
 		user = new User();
-
+		if (ICSOrNewer()) {
 		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
 				.permitAll().build();
+		}
 
 		pg = (ProgressBar) findViewById(R.id.progressBarjkjkj1);
 		imgV = (ImageView) findViewById(R.id.imageView1);
 		float f = (float) 0.1;
+		if (ICSOrNewer()) {
 		imgV.setAlpha(f);
+		} else {
+			imgV.setAlpha(10);
+		}
 		post = (Button) findViewById(R.id.button1);
 		input = (EditText) findViewById(R.id.chat_input);
 		Stickies.chatView = (TextView) findViewById(R.id.chatView);
@@ -144,10 +145,18 @@ public class ChatView extends SlidingActivity {
 		mainListView = (ListView) findViewById(R.id.userlist);
 		sv = (ScrollView) findViewById(R.id.scrollView1);
 		
-		pvt = (Switch) findViewById(R.id.pvt_switch);
-		msg = (Switch) findViewById(R.id.msg_switch);
-		pm = (Switch) findViewById(R.id.pms_switch);
-		refresh = (Switch) findViewById(R.id.refresh_switch);
+		if (ICSOrNewer()) {
+			pvt = (Switch) findViewById(R.id.pvt_switch);
+			msg = (Switch) findViewById(R.id.msg_switch);
+			pm = (Switch) findViewById(R.id.pms_switch);
+			refresh = (Switch) findViewById(R.id.refresh_switch);
+		} else {
+			comp_pvt = (CheckBox) findViewById(R.id.pvt_switch);
+			comp_msg = (CheckBox) findViewById(R.id.msg_switch);
+			comp_pm = (CheckBox) findViewById(R.id.pms_switch);
+			comp_refresh = (CheckBox) findViewById(R.id.refresh_switch);
+		}
+		
 		spinner = (Spinner) findViewById(R.id.refresh_time_spinner);
 		adapter = ArrayAdapter.createFromResource(this,
 		        R.array.refresh_time_array, android.R.layout.simple_spinner_item);
@@ -210,7 +219,7 @@ public class ChatView extends SlidingActivity {
 				return false;
 			}
 		});
-		
+		if (ICSOrNewer()) {
 		pm.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -262,6 +271,60 @@ public class ChatView extends SlidingActivity {
 				
 			}
 		});
+		
+		} else {
+			comp_pm.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					settings.pm_switch = isChecked;
+					settings.saveSettings(context);
+					setSettings();
+				
+					
+					
+				}
+			});
+			
+			comp_pvt.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					
+						settings.pvt_switch = isChecked;
+						settings.saveSettings(context);
+						setSettings();
+					
+					
+					
+				}
+			});
+			
+			comp_msg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					settings.msg_switch = isChecked;
+					settings.saveSettings(context);
+					setSettings();
+				
+					
+				}
+			});
+			
+			comp_refresh.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					settings.refresh = isChecked;
+					settings.saveSettings(context);
+					setSettings();
+				
+					
+					
+				}
+			});
+		}
 		
 		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -407,12 +470,19 @@ public class ChatView extends SlidingActivity {
 	public void setSettings() {
 		Settings set = Settings.getSettings(context);
 		
-		
+		if (ICSOrNewer()) {
 			msg.setChecked(set.msg_switch);
 
 			pvt.setChecked(set.pvt_switch);
 
 			pm.setChecked(set.pm_switch);
+		} else {
+			comp_msg.setChecked(set.msg_switch);
+
+			comp_pvt.setChecked(set.pvt_switch);
+
+			comp_pm.setChecked(set.pm_switch);
+		}
 		
 		int spinnerPosition = adapter.getPosition(String.valueOf(set.refresh_rate));
 		spinner.setSelection(spinnerPosition);
@@ -420,7 +490,7 @@ public class ChatView extends SlidingActivity {
 		screen_on.setChecked(set.screen_on);
 		setScreenOn(set.screen_on);
 
-		
+	if (ICSOrNewer()) {	
 		if (set.refresh) {
 			Automation.stopAutomaticRefresh(context);
 			Automation.startAutomaticRefresh(context);
@@ -429,6 +499,16 @@ public class ChatView extends SlidingActivity {
 			Automation.stopAutomaticRefresh(context);
 			refresh.setChecked(set.refresh);
 		}
+	} else {
+		if (set.refresh) {
+			Automation.stopAutomaticRefresh(context);
+			Automation.startAutomaticRefresh(context);
+			comp_refresh.setChecked(set.refresh);
+		} else {
+			Automation.stopAutomaticRefresh(context);
+			comp_refresh.setChecked(set.refresh);
+		}
+	}
 	}
 	
 	public void setScreenOn(boolean on) {
@@ -442,6 +522,15 @@ public class ChatView extends SlidingActivity {
 			params.screenBrightness = -1;
 			getWindow().setAttributes(params);
 		}
+	}
+	
+	public static boolean ICSOrNewer() {
+	    // SDK_INT is introduced in 1.6 (API Level 4) so code referencing that would fail
+	    // Also we can't use SDK_INT since some modified ROMs play around with this value, RELEASE is most versatile variable
+	    if (android.os.Build.VERSION.RELEASE.startsWith("4."))
+	        return true;
+
+	    return false;
 	}
 
 }

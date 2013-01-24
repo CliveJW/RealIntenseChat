@@ -1,0 +1,322 @@
+android.support.v4.app.BackStackState
+android.support.v4.app.BackStackState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.Fragment$SavedState
+android.support.v4.app.Fragment$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentActivity
+android.support.v4.app.FragmentManagerState
+android.support.v4.app.FragmentManagerState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentState
+android.support.v4.app.FragmentState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentTabHost
+android.support.v4.app.FragmentTabHost: FragmentTabHost(android.content.Context,android.util.AttributeSet)
+android.support.v4.app.FragmentTabHost: void setOnTabChangedListener(android.widget.TabHost$OnTabChangeListener)
+android.support.v4.app.FragmentTabHost$SavedState
+android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.view.PagerTabStrip
+android.support.v4.view.PagerTabStrip: PagerTabStrip(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColor(int)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColorResource(int)
+android.support.v4.view.PagerTabStrip: int getTabIndicatorColor()
+android.support.v4.view.PagerTabStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.PagerTabStrip: void setBackgroundColor(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundResource(int)
+android.support.v4.view.PagerTabStrip: void setDrawFullUnderline(boolean)
+android.support.v4.view.PagerTabStrip: boolean getDrawFullUnderline()
+android.support.v4.view.PagerTabStrip: int getMinHeight()
+android.support.v4.view.PagerTitleStrip
+android.support.v4.view.PagerTitleStrip: void setSingleLineAllCaps(android.widget.TextView)
+android.support.v4.view.PagerTitleStrip: PagerTitleStrip(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.PagerTitleStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTitleStrip: int getTextSpacing()
+android.support.v4.view.PagerTitleStrip: void setNonPrimaryAlpha(float)
+android.support.v4.view.PagerTitleStrip: void setTextColor(int)
+android.support.v4.view.PagerTitleStrip: void setGravity(int)
+android.support.v4.view.PagerTitleStrip: int getMinHeight()
+android.support.v4.view.ViewPager
+android.support.v4.view.ViewPager: ViewPager(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.ViewPager: void setScrollState(int)
+android.support.v4.view.ViewPager: void setAdapter(android.support.v4.view.PagerAdapter)
+android.support.v4.view.ViewPager: android.support.v4.view.PagerAdapter getAdapter()
+android.support.v4.view.ViewPager: void setOnAdapterChangeListener(android.support.v4.view.ViewPager$OnAdapterChangeListener)
+android.support.v4.view.ViewPager: void setCurrentItem(int)
+android.support.v4.view.ViewPager: int getCurrentItem()
+android.support.v4.view.ViewPager: void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+android.support.v4.view.ViewPager: void setChildrenDrawingOrderEnabledCompat(boolean)
+android.support.v4.view.ViewPager: int getOffscreenPageLimit()
+android.support.v4.view.ViewPager: void setOffscreenPageLimit(int)
+android.support.v4.view.ViewPager: void setPageMargin(int)
+android.support.v4.view.ViewPager: int getPageMargin()
+android.support.v4.view.ViewPager: void setPageMarginDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.ViewPager: void setPageMarginDrawable(int)
+android.support.v4.view.ViewPager: void setScrollingCacheEnabled(boolean)
+android.support.v4.view.ViewPager$LayoutParams
+android.support.v4.view.ViewPager$LayoutParams: ViewPager$LayoutParams(android.content.Context,android.util.AttributeSet)
+android.support.v4.view.ViewPager$SavedState
+android.support.v4.view.ViewPager$SavedState: android.os.Parcelable$Creator CREATOR
+com.slidingmenu.lib.CustomViewAbove
+com.slidingmenu.lib.CustomViewAbove: CustomViewAbove(android.content.Context,android.util.AttributeSet)
+com.slidingmenu.lib.CustomViewAbove: void setCurrentItem(int)
+com.slidingmenu.lib.CustomViewAbove: int getCurrentItem()
+com.slidingmenu.lib.CustomViewAbove: void setOnPageChangeListener(com.slidingmenu.lib.CustomViewAbove$OnPageChangeListener)
+com.slidingmenu.lib.CustomViewAbove: void setOnOpenedListener(com.slidingmenu.lib.SlidingMenu$OnOpenedListener)
+com.slidingmenu.lib.CustomViewAbove: void setOnClosedListener(com.slidingmenu.lib.SlidingMenu$OnClosedListener)
+com.slidingmenu.lib.CustomViewAbove: int getLeftBound()
+com.slidingmenu.lib.CustomViewAbove: int getRightBound()
+com.slidingmenu.lib.CustomViewAbove: int getContentLeft()
+com.slidingmenu.lib.CustomViewAbove: int getBehindWidth()
+com.slidingmenu.lib.CustomViewAbove: void setSlidingEnabled(boolean)
+com.slidingmenu.lib.CustomViewAbove: void setContent(android.view.View)
+com.slidingmenu.lib.CustomViewAbove: android.view.View getContent()
+com.slidingmenu.lib.CustomViewAbove: void setCustomViewBehind(com.slidingmenu.lib.CustomViewBehind)
+com.slidingmenu.lib.CustomViewAbove: void setAboveOffset(int)
+com.slidingmenu.lib.CustomViewAbove: void setTouchMode(int)
+com.slidingmenu.lib.CustomViewAbove: int getTouchMode()
+com.slidingmenu.lib.CustomViewAbove: float getPercentOpen()
+com.slidingmenu.lib.CustomViewAbove: void setScrollingCacheEnabled(boolean)
+com.slidingmenu.lib.CustomViewBehind
+com.slidingmenu.lib.CustomViewBehind: CustomViewBehind(android.content.Context,android.util.AttributeSet)
+com.slidingmenu.lib.CustomViewBehind: void setCustomViewAbove(com.slidingmenu.lib.CustomViewAbove)
+com.slidingmenu.lib.CustomViewBehind: void setCanvasTransformer(com.slidingmenu.lib.SlidingMenu$CanvasTransformer)
+com.slidingmenu.lib.CustomViewBehind: void setWidthOffset(int)
+com.slidingmenu.lib.CustomViewBehind: int getBehindWidth()
+com.slidingmenu.lib.CustomViewBehind: void setContent(android.view.View)
+com.slidingmenu.lib.CustomViewBehind: android.view.View getContent()
+com.slidingmenu.lib.CustomViewBehind: void setSecondaryContent(android.view.View)
+com.slidingmenu.lib.CustomViewBehind: android.view.View getSecondaryContent()
+com.slidingmenu.lib.CustomViewBehind: void setChildrenEnabled(boolean)
+com.slidingmenu.lib.CustomViewBehind: void setMode(int)
+com.slidingmenu.lib.CustomViewBehind: int getMode()
+com.slidingmenu.lib.CustomViewBehind: void setScrollScale(float)
+com.slidingmenu.lib.CustomViewBehind: float getScrollScale()
+com.slidingmenu.lib.CustomViewBehind: void setShadowDrawable(android.graphics.drawable.Drawable)
+com.slidingmenu.lib.CustomViewBehind: void setSecondaryShadowDrawable(android.graphics.drawable.Drawable)
+com.slidingmenu.lib.CustomViewBehind: void setShadowWidth(int)
+com.slidingmenu.lib.CustomViewBehind: void setFadeEnabled(boolean)
+com.slidingmenu.lib.CustomViewBehind: void setFadeDegree(float)
+com.slidingmenu.lib.CustomViewBehind: void setTouchMode(int)
+com.slidingmenu.lib.CustomViewBehind: void setSelectorEnabled(boolean)
+com.slidingmenu.lib.CustomViewBehind: void setSelectedView(android.view.View)
+com.slidingmenu.lib.CustomViewBehind: int getSelectorTop()
+com.slidingmenu.lib.CustomViewBehind: void setSelectorBitmap(android.graphics.Bitmap)
+com.slidingmenu.lib.R$attr: int shadowWidth
+com.slidingmenu.lib.R$attr: int shadowDrawable
+com.slidingmenu.lib.R$attr: int viewAbove
+com.slidingmenu.lib.R$attr: int behindScrollScale
+com.slidingmenu.lib.R$attr: int touchModeAbove
+com.slidingmenu.lib.R$attr: int touchModeBehind
+com.slidingmenu.lib.R$attr: int selectorDrawable
+com.slidingmenu.lib.R$attr: int mode
+com.slidingmenu.lib.R$attr: int behindWidth
+com.slidingmenu.lib.R$attr: int fadeDegree
+com.slidingmenu.lib.R$attr: int selectorEnabled
+com.slidingmenu.lib.R$attr: int behindOffset
+com.slidingmenu.lib.R$attr: int fadeEnabled
+com.slidingmenu.lib.R$attr: int viewBehind
+com.slidingmenu.lib.R$id: int fullscreen
+com.slidingmenu.lib.R$id: int slidingmenumain
+com.slidingmenu.lib.R$id: int selected_view
+com.slidingmenu.lib.R$id: int left
+com.slidingmenu.lib.R$id: int margin
+com.slidingmenu.lib.R$id: int right
+com.slidingmenu.lib.R$layout: int slidingmenumain
+com.slidingmenu.lib.R$styleable: int SlidingMenu_mode
+com.slidingmenu.lib.R$styleable: int SlidingMenu_shadowWidth
+com.slidingmenu.lib.R$styleable: int SlidingMenu_behindWidth
+com.slidingmenu.lib.R$styleable: int SlidingMenu_touchModeAbove
+com.slidingmenu.lib.R$styleable: int SlidingMenu_fadeDegree
+com.slidingmenu.lib.R$styleable: int SlidingMenu_shadowDrawable
+com.slidingmenu.lib.R$styleable: int SlidingMenu_touchModeBehind
+com.slidingmenu.lib.R$styleable: int SlidingMenu_fadeEnabled
+com.slidingmenu.lib.R$styleable: int SlidingMenu_behindOffset
+com.slidingmenu.lib.R$styleable: int SlidingMenu_selectorDrawable
+com.slidingmenu.lib.R$styleable: int SlidingMenu_viewAbove
+com.slidingmenu.lib.R$styleable: int SlidingMenu_behindScrollScale
+com.slidingmenu.lib.R$styleable: int SlidingMenu_selectorEnabled
+com.slidingmenu.lib.R$styleable: int[] SlidingMenu
+com.slidingmenu.lib.R$styleable: int SlidingMenu_viewBehind
+com.slidingmenu.lib.SlidingMenu
+com.slidingmenu.lib.SlidingMenu: SlidingMenu(android.content.Context)
+com.slidingmenu.lib.SlidingMenu: SlidingMenu(android.app.Activity,int)
+com.slidingmenu.lib.SlidingMenu: SlidingMenu(android.content.Context,android.util.AttributeSet)
+com.slidingmenu.lib.SlidingMenu: SlidingMenu(android.content.Context,android.util.AttributeSet,int)
+com.slidingmenu.lib.SlidingMenu: void setContent(int)
+com.slidingmenu.lib.SlidingMenu: void setContent(android.view.View)
+com.slidingmenu.lib.SlidingMenu: android.view.View getContent()
+com.slidingmenu.lib.SlidingMenu: void setMenu(int)
+com.slidingmenu.lib.SlidingMenu: void setMenu(android.view.View)
+com.slidingmenu.lib.SlidingMenu: android.view.View getMenu()
+com.slidingmenu.lib.SlidingMenu: void setSecondaryMenu(int)
+com.slidingmenu.lib.SlidingMenu: void setSecondaryMenu(android.view.View)
+com.slidingmenu.lib.SlidingMenu: android.view.View getSecondaryMenu()
+com.slidingmenu.lib.SlidingMenu: void setSlidingEnabled(boolean)
+com.slidingmenu.lib.SlidingMenu: void setMode(int)
+com.slidingmenu.lib.SlidingMenu: int getMode()
+com.slidingmenu.lib.SlidingMenu: void setStatic(boolean)
+com.slidingmenu.lib.SlidingMenu: int getBehindOffset()
+com.slidingmenu.lib.SlidingMenu: void setBehindOffset(int)
+com.slidingmenu.lib.SlidingMenu: void setBehindOffsetRes(int)
+com.slidingmenu.lib.SlidingMenu: void setAboveOffset(int)
+com.slidingmenu.lib.SlidingMenu: void setAboveOffsetRes(int)
+com.slidingmenu.lib.SlidingMenu: void setBehindWidth(int)
+com.slidingmenu.lib.SlidingMenu: void setBehindWidthRes(int)
+com.slidingmenu.lib.SlidingMenu: float getBehindScrollScale()
+com.slidingmenu.lib.SlidingMenu: void setBehindScrollScale(float)
+com.slidingmenu.lib.SlidingMenu: void setBehindCanvasTransformer(com.slidingmenu.lib.SlidingMenu$CanvasTransformer)
+com.slidingmenu.lib.SlidingMenu: int getTouchModeAbove()
+com.slidingmenu.lib.SlidingMenu: void setTouchModeAbove(int)
+com.slidingmenu.lib.SlidingMenu: void setTouchModeBehind(int)
+com.slidingmenu.lib.SlidingMenu: void setShadowDrawable(int)
+com.slidingmenu.lib.SlidingMenu: void setShadowDrawable(android.graphics.drawable.Drawable)
+com.slidingmenu.lib.SlidingMenu: void setSecondaryShadowDrawable(int)
+com.slidingmenu.lib.SlidingMenu: void setSecondaryShadowDrawable(android.graphics.drawable.Drawable)
+com.slidingmenu.lib.SlidingMenu: void setShadowWidthRes(int)
+com.slidingmenu.lib.SlidingMenu: void setShadowWidth(int)
+com.slidingmenu.lib.SlidingMenu: void setFadeEnabled(boolean)
+com.slidingmenu.lib.SlidingMenu: void setFadeDegree(float)
+com.slidingmenu.lib.SlidingMenu: void setSelectorEnabled(boolean)
+com.slidingmenu.lib.SlidingMenu: void setSelectedView(android.view.View)
+com.slidingmenu.lib.SlidingMenu: void setSelectorDrawable(int)
+com.slidingmenu.lib.SlidingMenu: void setSelectorBitmap(android.graphics.Bitmap)
+com.slidingmenu.lib.SlidingMenu: void setOnOpenListener(com.slidingmenu.lib.SlidingMenu$OnOpenListener)
+com.slidingmenu.lib.SlidingMenu: void setOnCloseListener(com.slidingmenu.lib.SlidingMenu$OnCloseListener)
+com.slidingmenu.lib.SlidingMenu: void setOnOpenedListener(com.slidingmenu.lib.SlidingMenu$OnOpenedListener)
+com.slidingmenu.lib.SlidingMenu: void setOnClosedListener(com.slidingmenu.lib.SlidingMenu$OnClosedListener)
+com.slidingmenu.lib.SlidingMenu$SavedState
+com.slidingmenu.lib.SlidingMenu$SavedState: android.os.Parcelable$Creator CREATOR
+com.slidingmenu.lib.app.SlidingActivity
+com.slidingmenu.lib.app.SlidingActivity: SlidingActivity()
+com.slidingmenu.lib.app.SlidingActivity: void setContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingActivity: void setBehindContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingFragmentActivity
+com.slidingmenu.lib.app.SlidingFragmentActivity: void setContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingFragmentActivity: void setBehindContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingListActivity
+com.slidingmenu.lib.app.SlidingListActivity: void setContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingListActivity: void setBehindContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingMapActivity
+com.slidingmenu.lib.app.SlidingMapActivity: void setContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingMapActivity: void setBehindContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingPreferenceActivity
+com.slidingmenu.lib.app.SlidingPreferenceActivity: void setContentView(android.view.View)
+com.slidingmenu.lib.app.SlidingPreferenceActivity: void setBehindContentView(android.view.View)
+org.acra.CrashReportDialog
+org.acra.ReportField: org.acra.ReportField[] values()
+org.acra.ReportField: org.acra.ReportField valueOf(java.lang.String)
+org.acra.ReportingInteractionMode: org.acra.ReportingInteractionMode[] values()
+org.acra.ReportingInteractionMode: org.acra.ReportingInteractionMode valueOf(java.lang.String)
+org.acra.collector.MediaCodecListCollector$CodecType: org.acra.collector.MediaCodecListCollector$CodecType[] values()
+org.acra.collector.MediaCodecListCollector$CodecType: org.acra.collector.MediaCodecListCollector$CodecType valueOf(java.lang.String)
+za.co.rigaming.realintensechat.AppSettings
+za.co.rigaming.realintensechat.AppSettings: AppSettings()
+za.co.rigaming.realintensechat.ChatView
+za.co.rigaming.realintensechat.ChatView: ChatView()
+za.co.rigaming.realintensechat.GetMessages
+za.co.rigaming.realintensechat.MessageService
+za.co.rigaming.realintensechat.MyApplication
+za.co.rigaming.realintensechat.NoticeReceiver
+za.co.rigaming.realintensechat.PostMessage
+za.co.rigaming.realintensechat.PutName
+za.co.rigaming.realintensechat.R$array: int refresh_time_array
+za.co.rigaming.realintensechat.R$attr: int behindOffset
+za.co.rigaming.realintensechat.R$attr: int behindScrollScale
+za.co.rigaming.realintensechat.R$attr: int behindWidth
+za.co.rigaming.realintensechat.R$attr: int fadeDegree
+za.co.rigaming.realintensechat.R$attr: int fadeEnabled
+za.co.rigaming.realintensechat.R$attr: int mode
+za.co.rigaming.realintensechat.R$attr: int selectorDrawable
+za.co.rigaming.realintensechat.R$attr: int selectorEnabled
+za.co.rigaming.realintensechat.R$attr: int shadowDrawable
+za.co.rigaming.realintensechat.R$attr: int shadowWidth
+za.co.rigaming.realintensechat.R$attr: int touchModeAbove
+za.co.rigaming.realintensechat.R$attr: int touchModeBehind
+za.co.rigaming.realintensechat.R$attr: int viewAbove
+za.co.rigaming.realintensechat.R$attr: int viewBehind
+za.co.rigaming.realintensechat.R$dimen: int actionbar_home_width
+za.co.rigaming.realintensechat.R$dimen: int list_padding
+za.co.rigaming.realintensechat.R$dimen: int shadow_width
+za.co.rigaming.realintensechat.R$drawable: int blood
+za.co.rigaming.realintensechat.R$drawable: int ic_launcher
+za.co.rigaming.realintensechat.R$drawable: int ico
+za.co.rigaming.realintensechat.R$drawable: int llama
+za.co.rigaming.realintensechat.R$drawable: int logo
+za.co.rigaming.realintensechat.R$drawable: int radient
+za.co.rigaming.realintensechat.R$drawable: int sly
+za.co.rigaming.realintensechat.R$drawable: int wheee
+za.co.rigaming.realintensechat.R$id: int RelativeLayout1
+za.co.rigaming.realintensechat.R$id: int bro
+za.co.rigaming.realintensechat.R$id: int button1
+za.co.rigaming.realintensechat.R$id: int chatView
+za.co.rigaming.realintensechat.R$id: int chat_input
+za.co.rigaming.realintensechat.R$id: int digitalClock1
+za.co.rigaming.realintensechat.R$id: int fullscreen
+za.co.rigaming.realintensechat.R$id: int imageView1
+za.co.rigaming.realintensechat.R$id: int left
+za.co.rigaming.realintensechat.R$id: int margin
+za.co.rigaming.realintensechat.R$id: int menu_settings
+za.co.rigaming.realintensechat.R$id: int msg_switch
+za.co.rigaming.realintensechat.R$id: int pms_switch
+za.co.rigaming.realintensechat.R$id: int progressBar1
+za.co.rigaming.realintensechat.R$id: int progressBar2
+za.co.rigaming.realintensechat.R$id: int progressBarjkjkj1
+za.co.rigaming.realintensechat.R$id: int pvt_switch
+za.co.rigaming.realintensechat.R$id: int refresh_switch
+za.co.rigaming.realintensechat.R$id: int refresh_text
+za.co.rigaming.realintensechat.R$id: int refresh_time_spinner
+za.co.rigaming.realintensechat.R$id: int right
+za.co.rigaming.realintensechat.R$id: int rowTextView
+za.co.rigaming.realintensechat.R$id: int screen_on_check
+za.co.rigaming.realintensechat.R$id: int scrollView1
+za.co.rigaming.realintensechat.R$id: int selected_view
+za.co.rigaming.realintensechat.R$id: int side_navigation_menu_item1
+za.co.rigaming.realintensechat.R$id: int side_navigation_menu_item2
+za.co.rigaming.realintensechat.R$id: int side_navigation_menu_item3
+za.co.rigaming.realintensechat.R$id: int side_navigation_menu_item4
+za.co.rigaming.realintensechat.R$id: int side_navigation_menu_item5
+za.co.rigaming.realintensechat.R$id: int slidingmenumain
+za.co.rigaming.realintensechat.R$id: int textView1
+za.co.rigaming.realintensechat.R$id: int textView2
+za.co.rigaming.realintensechat.R$id: int textView3
+za.co.rigaming.realintensechat.R$id: int textView4
+za.co.rigaming.realintensechat.R$id: int unread
+za.co.rigaming.realintensechat.R$id: int unreadpm
+za.co.rigaming.realintensechat.R$id: int user
+za.co.rigaming.realintensechat.R$id: int userlist
+za.co.rigaming.realintensechat.R$id: int webview
+za.co.rigaming.realintensechat.R$id: int whisp_text
+za.co.rigaming.realintensechat.R$layout: int border
+za.co.rigaming.realintensechat.R$layout: int list
+za.co.rigaming.realintensechat.R$layout: int postmessage
+za.co.rigaming.realintensechat.R$layout: int simple_view
+za.co.rigaming.realintensechat.R$layout: int slidingmenumain
+za.co.rigaming.realintensechat.R$layout: int webview
+za.co.rigaming.realintensechat.R$layout: int whisper
+za.co.rigaming.realintensechat.R$menu: int activity_main
+za.co.rigaming.realintensechat.R$menu: int side_navigation_menu
+za.co.rigaming.realintensechat.R$string: int app_name
+za.co.rigaming.realintensechat.R$string: int hello_world
+za.co.rigaming.realintensechat.R$string: int menu_settings
+za.co.rigaming.realintensechat.R$string: int rig_orange
+za.co.rigaming.realintensechat.R$style: int AppBaseTheme
+za.co.rigaming.realintensechat.R$style: int AppTheme
+za.co.rigaming.realintensechat.R$styleable: int[] SlidingMenu
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_behindOffset
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_behindScrollScale
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_behindWidth
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_fadeDegree
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_fadeEnabled
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_mode
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_selectorDrawable
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_selectorEnabled
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_shadowDrawable
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_shadowWidth
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_touchModeAbove
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_touchModeBehind
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_viewAbove
+za.co.rigaming.realintensechat.R$styleable: int SlidingMenu_viewBehind
+za.co.rigaming.realintensechat.RefreshService
+za.co.rigaming.realintensechat.RefreshService: RefreshService()
+za.co.rigaming.realintensechat.WebviewForLogin
+za.co.rigaming.realintensechat.WebviewForLogin: WebviewForLogin()

@@ -1,16 +1,15 @@
 package za.co.rigaming.realintensechat;
 
-import java.net.URLConnection;
+import java.util.concurrent.TimeUnit;
 
-import org.acra.*;
-import org.acra.annotation.*;
+import org.acra.ACRA;
+import org.acra.annotation.ReportsCrashes;
 import org.apache.http.client.CookieStore;
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
@@ -18,9 +17,6 @@ import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.params.BasicHttpParams;
 
 import android.app.Application;
-import android.support.v4.util.TimeUtils;
-import android.webkit.CookieManager;
-import java.util.concurrent.TimeUnit;
 
 @ReportsCrashes(formKey = "dFJNcVdBTm4tQzUzbncwb3FUbUQzUWc6MQ")
 public class AppSettings extends Application {

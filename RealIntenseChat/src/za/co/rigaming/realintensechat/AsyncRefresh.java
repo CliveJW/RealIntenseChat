@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -17,9 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import za.co.rigaming.realintensechat.Elements.*;
 import za.co.rigaming.realintensechat.GeneralSettings.Settings;
-
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Notification;
@@ -29,14 +26,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
-import za.co.rigaming.realintensechat.NotificationGenerator;
 
 public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 
@@ -189,6 +184,7 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 				    } else {
 				    	if (set.pvt_switch){
 				    	Intent pop_priv = new Intent(context, ChatView.class);
+				    	pop_priv.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						createNotification(context, pop_priv, null, "R.I.G Mobile", "Pvt From:  " + i.sender, 99944);
 						doNotify();
 				    }
@@ -214,7 +210,7 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 				    } else {
 				    	if (set.msg_switch) {
 				    	Intent pop_priv = new Intent(context, ChatView.class);
-				    	pop_priv.setAction("android.intent.action.MAIN");
+				    	pop_priv.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						createNotification(context, pop_priv, null, "R.I.G Mobile", "Direct Msg From: " + i.sender, 99946);
 						doNotify();
 				    	}
