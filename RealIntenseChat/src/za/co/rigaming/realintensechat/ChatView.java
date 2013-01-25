@@ -45,13 +45,15 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.slidingmenu.lib.SlidingMenu;
 import com.slidingmenu.lib.app.SlidingActivity;
 
 @SuppressLint("NewApi")
 public class ChatView extends SlidingActivity {
-
+	
+	private boolean doubleBackToExitPressedOnce = false;
 	public class User {
 		String id;
 		String name;
@@ -93,6 +95,7 @@ public class ChatView extends SlidingActivity {
 	static CheckBox comp_msg;
 	static CheckBox comp_refresh;
 	static ArrayAdapter<CharSequence> adapter;
+	static SlidingMenu sm;
 	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 	@SuppressLint("NewApi")
 	@Override
@@ -104,8 +107,8 @@ public class ChatView extends SlidingActivity {
 		setContentView(R.layout.postmessage);
 		setBehindContentView(R.layout.list);
 		
-		SlidingMenu sm = getSlidingMenu();
-		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);
+		sm = getSlidingMenu();
+		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);		
 		
 		v = getWindow().getDecorView();
 	
@@ -384,7 +387,32 @@ public class ChatView extends SlidingActivity {
 		}
 		return false;
 	};
+	
+	@Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
 
+            @Override
+            public void run() {
+             doubleBackToExitPressedOnce=false;   
+
+            }
+        }, 2000);
+    } 
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+	       sm.showMenu(true); 
+	    }
+	    return true;
+	}
+		
 	public void ShowWhisperScreen() {
 
 		LayoutInflater factory = LayoutInflater.from(this);
@@ -532,5 +560,7 @@ public class ChatView extends SlidingActivity {
 
 	    return false;
 	}
+	
+	
 
 }

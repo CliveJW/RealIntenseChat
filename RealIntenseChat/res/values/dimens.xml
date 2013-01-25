@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actionbar_home_width">260dp</dimen>
+    <dimen name="actionbar_home_width">280dp</dimen>
     <dimen name="list_padding">2dp</dimen>
     <dimen name="shadow_width">10dp</dimen>
 </resources>

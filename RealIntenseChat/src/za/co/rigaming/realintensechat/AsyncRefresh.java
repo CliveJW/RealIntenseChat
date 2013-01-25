@@ -31,6 +31,7 @@ import android.os.Vibrator;
 import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 
 public class AsyncRefresh extends AsyncTask<String, Object, Object> {
@@ -309,6 +310,8 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 	
 	public static void createNotification(Context context, Intent intent,
 			String action, String title, String message, int notificationID) {
+		
+		long pattern[] = new long[] {25,25,50,50,200};
 
 		PendingIntent pIntent = PendingIntent
 				.getActivity(context, 0, intent, 0);
@@ -316,12 +319,14 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 		Notification noti = new NotificationCompat.Builder(context)
 				.setContentTitle(title).setContentText(message)
 				.setSmallIcon(R.drawable.ic_launcher).setContentIntent(pIntent)
+				.setLights(0xFF0000FF,100,3000)
+				.setVibrate(pattern)
 				.build();
 		NotificationManager notificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 		// Hide the notification after its selected
 		noti.flags |= Notification.FLAG_AUTO_CANCEL;
-
+		
 		notificationManager.notify(notificationID, noti);
 
 	}
