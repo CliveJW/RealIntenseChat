@@ -178,6 +178,13 @@
                 android:background="@layout/border"
                 android:text="Keep Screen On:"
                 android:textColor="@android:color/white" />
+            
+            <Spinner
+                android:id="@+id/text_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@layout/border"
+                android:layout_weight="1" />
         </RelativeLayout>
     </ScrollView>
 

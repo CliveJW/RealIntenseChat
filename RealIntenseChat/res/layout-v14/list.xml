@@ -1,87 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/list"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/radient"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
     android:paddingLeft="@dimen/list_padding"
-    android:paddingRight="@dimen/list_padding"
-     >
+    android:paddingRight="@dimen/list_padding" >
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         >
+        android:layout_width="250dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" >
 
         <LinearLayout
             android:layout_width="240dp"
-            android:layout_height="451dp"
-            android:layout_gravity="center_vertical"
+            android:layout_height="fill_parent"
             android:orientation="vertical" >
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="60dp" />
-
-            <ImageView
-                android:id="@+id/imageView1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" 
-                android:layout_marginBottom="10dp"/>
-
-            <Space
-                android:layout_width="270dp"
-                android:layout_height="10dp"
-                android:layout_weight="0.19" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@android:color/darker_gray"
                 android:text="Notifications:"
-                android:textAppearance="?android:attr/textAppearanceLarge" 
-                android:background="@android:color/darker_gray"/>
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <Switch
                 android:id="@+id/pvt_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@layout/border"
                 android:text="Pvt"
-                android:textSize="14sp" 
                 android:textColor="@android:color/white"
-                android:background="@layout/border"/>
+                android:textSize="14sp" />
 
             <Switch
                 android:id="@+id/pms_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PM&apos;s" 
-                android:textSize="14sp"
+                android:layout_weight="1"
+                android:background="@layout/border"
+                android:text="PM&apos;s"
                 android:textColor="@android:color/white"
-                android:background="@layout/border"/>
+                android:textSize="14sp" />
 
             <Switch
                 android:id="@+id/msg_switch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="[MSG]" 
-                android:textSize="14sp"
+                android:layout_weight="1"
+                android:background="@layout/border"
+                android:text="[MSG]"
                 android:textColor="@android:color/white"
-                android:background="@layout/border"/>
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="20dp" />
+                android:layout_height="20dp"
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="@android:color/darker_gray"
                 android:text="System:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -91,37 +77,76 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_weight="1"
+                android:background="@layout/border"
                 android:text="Auto Refresh"
-                android:textSize="14sp" 
                 android:textColor="@android:color/white"
-                android:background="@layout/border"/>
- <Space
+                android:textSize="14sp" />
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+
             <TextView
                 android:id="@+id/refresh_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Refresh Rate/sec" 
-                android:textSize="14sp"
+                android:layout_weight="1"
+                android:text="Refresh Rate/sec"
                 android:textColor="@android:color/white"
-                />
+                android:textSize="14sp" />
 
             <Spinner
                 android:id="@+id/refresh_time_spinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" 
-                android:background="@layout/border"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@layout/border" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
 
             <CheckBox
                 android:id="@+id/screen_on_check"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:background="@layout/border"
+                android:text="Keep Screen On:"
+                android:textColor="@android:color/white" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/resize_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Keep Screen On:" 
+                android:layout_weight="1"
+                android:text="Chat Text Size:"
                 android:textColor="@android:color/white"
-                android:background="@layout/border"/>
+                android:textSize="14sp" />
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_weight="1" />
+            
+           
+            <Spinner
+                android:id="@+id/text_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@layout/border"
+                android:layout_weight="1" />
         </LinearLayout>
+
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
