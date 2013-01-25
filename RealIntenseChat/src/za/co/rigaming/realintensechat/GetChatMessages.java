@@ -179,7 +179,6 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 					spanToBe = name + i.Text;
 					publishProgress(spanToBe);
 					if (set.msg_switch) {
-						Log.i("POES CUNT", String.valueOf(set.msg_switch));
 						mustNotify = true;
 					}
 					continue;
@@ -187,7 +186,7 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 				} 
 				
 					 
-						spanToBe = name + i.Text;
+						spanToBe = name + "<font color=#ffffff>" + i.Text + "</font>";
 						publishProgress(spanToBe);
 					}
 				
@@ -252,14 +251,12 @@ public class GetChatMessages extends AsyncTask<String, Object, Object> {
 		} catch (Exception e) {
 		}
 	}
-	public Object printIt(Object it) {
-		System.out.print(it.toString());
-		return it;
-	}
+	
+	
+	
 	public static Runnable run = new Runnable() {
 		public void run() {
 			ChatView.sv.fullScroll(View.FOCUS_DOWN);
-			Stickies.chatView.invalidate();
 			return;
 		}
 	};

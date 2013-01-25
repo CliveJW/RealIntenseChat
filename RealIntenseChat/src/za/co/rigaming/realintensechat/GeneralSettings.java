@@ -15,18 +15,21 @@ public class GeneralSettings {
 		int refresh_rate;
 		boolean screen_on;
 		boolean refresh;
+		int text_size;
 
 		public static Settings getSettings(Context context) {
+			
 			Settings set = new Settings();
 
 			MySQLiteHelper mysql = new MySQLiteHelper(context);
 			SQLiteDatabase db = mysql.getReadableDatabase();
 			Cursor c = db.query("settings", new String[] { "notifyPm",
 					"notifyMsg", "notifyPvt", "refresh", "refresh_rate",
-					"screen_on" }, "id = ?", new String[] { "1" }, null, null,
+					"screen_on", "text_size" }, "id = ?", new String[] { "1" }, null, null,
 					null);
 			
 			c.moveToFirst();
+			
 			if (c.getInt(0) == 1) {
 				set.pm_switch = true;
 			} else {
@@ -58,6 +61,8 @@ public class GeneralSettings {
 			} else {
 				set.screen_on = false;
 			}
+			
+			set.text_size = (c.getInt(6));
 
 			db.close();
 			return set;
@@ -89,6 +94,9 @@ public class GeneralSettings {
 			
 			cv.put("screen_on", (this.screen_on) ? 1 : 0);
 			Log.i("screen_on", String.valueOf((this.screen_on) ? 1 : 0));
+			
+			cv.put("text_size", this.text_size);
+			Log.i("text_size", String.valueOf(this.text_size));
 
 			long success = db.update("settings", cv, "id = ?", new String[] {"1"});
 			

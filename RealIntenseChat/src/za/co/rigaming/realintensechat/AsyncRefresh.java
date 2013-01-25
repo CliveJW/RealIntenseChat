@@ -303,7 +303,6 @@ public class AsyncRefresh extends AsyncTask<String, Object, Object> {
 	public static Runnable run = new Runnable() {
 		public void run() {
 			ChatView.sv.fullScroll(View.FOCUS_DOWN);
-			Stickies.chatView.invalidate();
 			return;
 		}
 	};

@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import za.co.rigaming.realintensechat.GeneralSettings.Settings;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -87,6 +88,7 @@ public class ChatView extends SlidingActivity {
 	static Switch pvt;
 	static Switch msg;
 	static Spinner spinner;
+	static Spinner textSizeSpinner;
 	static Switch refresh;
 	static Settings settings;
 	static CheckBox screen_on;
@@ -95,23 +97,33 @@ public class ChatView extends SlidingActivity {
 	static CheckBox comp_msg;
 	static CheckBox comp_refresh;
 	static ArrayAdapter<CharSequence> adapter;
+	static ArrayAdapter<CharSequence> textSizeAdapter;
 	static SlidingMenu sm;
+	static SlidingMenu sm2;
 	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		context = getApplicationContext();
-		View v = getWindow().getDecorView();
 		this.setSlidingActionBarEnabled(true);
 		setContentView(R.layout.postmessage);
 		setBehindContentView(R.layout.list);
-		
+
 		sm = getSlidingMenu();
 		sm.setBehindOffsetRes(R.dimen.actionbar_home_width);		
+		sm.setFadeDegree(0.9f);
+		sm.setBehindScrollScale(0.7f);
 		
-		v = getWindow().getDecorView();
-	
+//		SlidingMenu menu = new SlidingMenu(this);
+//        menu.setMode(SlidingMenu.RIGHT);
+//        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+//        menu.setShadowWidthRes(R.dimen.shadow_width);
+//        menu.setBehindOffsetRes(R.dimen.actionbar_home_width);
+//        menu.setFadeDegree(0.35f);
+//        menu.attachToActivity(this, SlidingMenu.SLIDING_WINDOW);
+//        //menu.setMenu(R.layout.list);
+		
 		CookieSyncManager.createInstance(this);
 		settings = Settings.getSettings(getApplicationContext());
 		
@@ -139,7 +151,7 @@ public class ChatView extends SlidingActivity {
 		post = (Button) findViewById(R.id.button1);
 		input = (EditText) findViewById(R.id.chat_input);
 		Stickies.chatView = (TextView) findViewById(R.id.chatView);
-		Stickies.chatView.setTextSize(11);
+		
 		Stickies.chatView.setMovementMethod(new ScrollingMovementMethod());
 
 		username = (TextView) findViewById(R.id.user);
@@ -165,6 +177,13 @@ public class ChatView extends SlidingActivity {
 		        R.array.refresh_time_array, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spinner.setAdapter(adapter);
+		
+		textSizeSpinner = (Spinner) findViewById(R.id.text_size);
+		textSizeAdapter = ArrayAdapter.createFromResource(this,
+		        R.array.text_size_array, android.R.layout.simple_spinner_item);
+		textSizeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		textSizeSpinner.setAdapter(textSizeAdapter);
+		
 		screen_on = (CheckBox) findViewById(R.id.screen_on_check);
 		
 		
@@ -341,6 +360,20 @@ public class ChatView extends SlidingActivity {
 		    }
 		});
 		
+		textSizeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+		    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		        Object item = parent.getItemAtPosition(pos);
+		        String selection = (String) item;
+		        settings.text_size = Integer.valueOf(selection);
+		        settings.saveSettings(context);
+		        setSettings();
+		        Stickies.chatView.setTextSize(settings.text_size);
+		        Stickies.chatView.invalidate();
+		    }
+		    public void onNothingSelected(AdapterView<?> parent) {
+		    }
+		});
+		
 		screen_on.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			
 			@Override
@@ -388,31 +421,37 @@ public class ChatView extends SlidingActivity {
 		return false;
 	};
 	
-	@Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-             doubleBackToExitPressedOnce=false;   
-
-            }
-        }, 2000);
-    } 
+	
 	@Override
 	public boolean onKeyUp(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-	       sm.showMenu(true); 
+			if (sm.isMenuShowing()) {
+				sm.showContent(true);
+			} else {
+				sm.showMenu(true);
+			}
+	    } else if (keyCode == KeyEvent.KEYCODE_BACK) {
+	    	 if (doubleBackToExitPressedOnce) {
+	             super.onBackPressed();
+	             return true;
+	         }
+	         this.doubleBackToExitPressedOnce = true;
+	         Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+	         new Handler().postDelayed(new Runnable() {
+
+	             @Override
+	             public void run() {
+	              doubleBackToExitPressedOnce=false;   
+
+	             }
+	         }, 2000);
 	    }
 	    return true;
 	}
 		
+	
+	
+	
 	public void ShowWhisperScreen() {
 
 		LayoutInflater factory = LayoutInflater.from(this);
@@ -517,6 +556,9 @@ public class ChatView extends SlidingActivity {
 		
 		screen_on.setChecked(set.screen_on);
 		setScreenOn(set.screen_on);
+		
+		int textSize = textSizeAdapter.getPosition(String.valueOf(set.text_size));
+		textSizeSpinner.setSelection(textSize);
 
 	if (ICSOrNewer()) {	
 		if (set.refresh) {

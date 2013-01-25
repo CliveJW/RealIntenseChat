@@ -46,7 +46,8 @@ public void onCreate(SQLiteDatabase db) {
 	        "\"notifyPvt\" INTEGER NOT NULL, " +
 	        "\"refresh\" INTEGER NOT NULL, " +
 	        "\"refresh_rate\" INTEGER NOT NULL, " +
-	        "\"screen_on\" INTEGER NOT NULL"
+	        "\"screen_on\" INTEGER NOT NULL, " +
+	        "\"text_size\" INTEGER NOT NULL"
 	        + ");"
 	      );
 	
@@ -58,6 +59,7 @@ public void onCreate(SQLiteDatabase db) {
 	cv.put("refresh", 1);
 	cv.put("refresh_rate", 30);
 	cv.put("screen_on", 0);
+	cv.put("text_size", 10);
 	db.insert("settings", null, cv);
 
 }
